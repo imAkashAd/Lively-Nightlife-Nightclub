@@ -14,4 +14,17 @@ class IconPath {
   static const String googleLogoIcon = 'assets/icons/googleLogo.svg';
   static const String backArrowIcon = 'assets/icons/backArrow.svg';
   static const String calendarIcon = 'assets/icons/calendarIcon.svg';
+  static const String homeIcon = 'assets/icons/homeIcon.svg';
+  static const String discoverIcon = 'assets/icons/discoverIcon.svg';
+  static const String locationIcon = 'assets/icons/locationIcon.svg';
+  static const String eventIcon = 'assets/icons/eventIcon.svg';
+  static const String messageIcon = 'assets/icons/messageIcon.svg';
+  static const String likeIcon = 'assets/icons/likeIcon.svg';
+  static const String commentIcon = 'assets/icons/commentIcon.svg';
+  static const String shareIcon = 'assets/icons/shareIcon.svg';
+  static const String saveIcon = 'assets/icons/saveIcon.svg';
+  static const String threeDotIcon = 'assets/icons/threedotIcon.svg';
+  static const String notificationBellIcon = 'assets/icons/bellicon.svg';  
+  static const String flameIcon = 'assets/icons/flameIconforHeatmap.svg';  
+  static const String filterIcon = 'assets/icons/filterIcon.svg';  
 }

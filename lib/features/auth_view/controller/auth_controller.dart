@@ -22,6 +22,8 @@ class AuthController extends GetxController {
   // Club Signup
   final clubNameController = TextEditingController();
   final phoneController = TextEditingController();
+  final selectedDay = DateTime.now().obs;
+  final focusedDay = DateTime.now().obs;
 
   // Shared
   final signupEmailController = TextEditingController();
@@ -37,11 +39,29 @@ class AuthController extends GetxController {
   }
 
   Future<void> login() async {
-    Get.toNamed(
-      AppRoute.otpVerificationView,
-      arguments: {'role': selectedRole.value.name, 'type': 'login'},
+
+  isLoading.value = true;
+
+  await Future.delayed(
+    const Duration(seconds: 1),
+  );
+
+  isLoading.value = false;
+
+  if (selectedRole.value == AuthRole.user) {
+
+    Get.offAllNamed(
+      AppRoute.userBottomNavigationBarView,
     );
+
+  } else {
+
+    Get.offAllNamed(
+      AppRoute.clubBottomNavbarView,
+    );
+
   }
+}
 
   Future<void> register() async {
     Get.toNamed(
@@ -50,14 +70,17 @@ class AuthController extends GetxController {
     );
   }
 
-  void selectDate(
-  DateTime selectedDate,
-) {
-  dobController.text =
-      "${selectedDate.day.toString().padLeft(2, '0')}/"
-      "${selectedDate.month.toString().padLeft(2, '0')}/"
-      "${selectedDate.year}";
-}
+  void onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+    this.selectedDay.value = selectedDay;
+    this.focusedDay.value = focusedDay;
+  }
+
+  void selectDate(DateTime selectedDate) {
+    dobController.text =
+        "${selectedDate.day.toString().padLeft(2, '0')}/"
+        "${selectedDate.month.toString().padLeft(2, '0')}/"
+        "${selectedDate.year}";
+  }
 
   @override
   void onClose() {

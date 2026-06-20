@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
 import 'package:get/get.dart';
+import 'package:lively_nightlife_nightclub_party/core/common/widgets/custom_button.dart';
 import 'package:lively_nightlife_nightclub_party/core/common/widgets/text_property.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/colors.dart';
 import 'package:lively_nightlife_nightclub_party/features/auth_view/controller/auth_controller.dart';
 
-
-class DatePickerBottomSheet extends StatelessWidget {
-  const DatePickerBottomSheet({
+class DobPickerBottomSheet extends StatelessWidget {
+  const DobPickerBottomSheet({
     super.key,
   });
 
@@ -15,50 +17,75 @@ class DatePickerBottomSheet extends StatelessWidget {
     final controller =
         Get.find<AuthController>();
 
+    DateTime selectedDate =
+        DateTime.now().subtract(
+      const Duration(days: 365 * 20),
+    );
+
     return Container(
-      height: 500,
-      decoration: const BoxDecoration(
-        color: Colors.white,
+      padding: EdgeInsets.all(24.w),
+      decoration: BoxDecoration(
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.vertical(
-          top: Radius.circular(24),
+          top: Radius.circular(30.r),
         ),
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          SizedBox(height: 12),
-
           Container(
-            width: 50,
-            height: 4,
+            width: 50.w,
+            height: 4.h,
             decoration: BoxDecoration(
-              color: Colors.grey.shade300,
+              color: AppColors.lightGreyColor,
               borderRadius:
-                  BorderRadius.circular(100),
+                  BorderRadius.circular(100.r),
             ),
           ),
 
-          SizedBox(height: 20),
+          SizedBox(height: 20.h),
 
           TextProperty(
             text: 'Select Date of Birth',
             textColor: AppColors.blackColor,
-            fontSize: 18,
+            fontSize: 18.sp,
             fontWeight: FontWeight.w600,
           ),
 
-          SizedBox(height: 20),
+          SizedBox(height: 20.h),
 
-          // Expanded(
-          //   child: AwesomeCalendarPicker(
-          //     onDateSelected: (date) {
-          //       controller.selectDate(
-          //         date,
-          //       );
+          DatePickerWidget(
+            looping: false,
+            firstDate: DateTime(1950),
+            lastDate: DateTime.now(),
+            initialDate: selectedDate,
+            dateFormat:
+                "dd-MMMM-yyyy",
+            locale: DatePicker.localeFromString(
+              'en',
+            ),
+            onChange: (date, _) {
+              selectedDate = date;
+            },
+            pickerTheme:
+                const DateTimePickerTheme(
+              backgroundColor:
+                  Colors.white,
+            ),
+          ),
 
-          //       Get.back();
-          //     },
-          //   ),
-          // ),
+          SizedBox(height: 20.h),
+
+          CustomButton(
+            text: 'Confirm Date',
+            onTap: () {
+              controller.selectDate(
+                selectedDate,
+              );
+
+              Get.back();
+            },
+          ),
         ],
       ),
     );

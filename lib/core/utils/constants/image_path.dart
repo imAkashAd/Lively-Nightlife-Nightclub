@@ -9,5 +9,6 @@ class ImagePath{
   static const String onbImage2 = 'assets/images/onbImage2.png';
   static const String onbImage3 = 'assets/images/onbImage3.png';
   static const String onbImage4 = 'assets/images/onbImage4.png';
+  static const String feedImage = 'assets/images/feedImage.png';
 
 }

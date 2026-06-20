@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:lively_nightlife_nightclub_party/features/auth_view/bindings/auth_bindings.dart';
 import 'package:lively_nightlife_nightclub_party/features/auth_view/bindings/create_password_binding.dart';
+import 'package:lively_nightlife_nightclub_party/features/auth_view/bindings/opt_bindings.dart';
 import 'package:lively_nightlife_nightclub_party/features/auth_view/bindings/reset_password_flow_binding.dart';
 import 'package:lively_nightlife_nightclub_party/features/auth_view/bindings/signup_binding.dart';
 import 'package:lively_nightlife_nightclub_party/features/auth_view/view/get_started_view.dart';
@@ -9,7 +10,9 @@ import 'package:lively_nightlife_nightclub_party/features/auth_view/view/otp_ver
 import 'package:lively_nightlife_nightclub_party/features/auth_view/view/password_reset_flow_view.dart';
 import 'package:lively_nightlife_nightclub_party/features/auth_view/view/sign_up_view.dart';
 import 'package:lively_nightlife_nightclub_party/features/auth_view/widgets/create_new_pass_view.dart';
-import 'package:lively_nightlife_nightclub_party/features/bottom_navigation_bar/bindings/navbar_bindings.dart';
+import 'package:lively_nightlife_nightclub_party/features/bottom_navigation_bar/bindings/club_bottom_navbar_bindings.dart';
+import 'package:lively_nightlife_nightclub_party/features/bottom_navigation_bar/bindings/user_bottom_navbar_bindings.dart';
+import 'package:lively_nightlife_nightclub_party/features/bottom_navigation_bar/view/club_bottom_navbar_view.dart';
 import 'package:lively_nightlife_nightclub_party/features/bottom_navigation_bar/view/user_bottom_navigation_bar_view.dart';
 // import 'package:lively_nightlife_nightclub_party/features/bottom_navigation_bar/bindings/navbar_bindings.dart';
 // import 'package:lively_nightlife_nightclub_party/features/bottom_navigation_bar/view/bottom_navigation_bar_view.dart';
@@ -20,6 +23,8 @@ import 'package:lively_nightlife_nightclub_party/features/onboarding_view/model/
 import 'package:lively_nightlife_nightclub_party/features/onboarding_view/view/onboarding_view.dart';
 import 'package:lively_nightlife_nightclub_party/features/onboarding_view/view/permission_view.dart';
 import 'package:lively_nightlife_nightclub_party/features/onboarding_view/view/vibe_selection_view.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/heat_map/bindings/heat_map_bindings.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/home_view/bindings/user_home_bindings.dart';
 import 'package:lively_nightlife_nightclub_party/features/splash_view/bindings/splash_bindings.dart';
 import 'package:lively_nightlife_nightclub_party/features/splash_view/view/splash_view.dart';
 
@@ -30,16 +35,15 @@ class AppRoute {
   static const String forgetPassView = '/forgetPassView';
   static const String createNewPassView = '/createNewPassView';
   static const String signUpView = '/signUpView';
-  static const String userBottomNavigationBarView = '/userBottomNavigationBarView';
+  static const String userBottomNavigationBarView =
+      '/userBottomNavigationBarView';
+  static const String clubBottomNavbarView = '/clubBottomNavbarView';
   static const String notificationView = '/notificationView';
   static const String changePasswordView = '/changePasswordView';
   static const String getStartedView = '/getstartedView';
   static const String otpVerificationView = '/otpVerificationView';
   static const String permissionView = '/permissionView';
   static const String vibeSelectionView = '/vibeSelectionView';
-
-
-
 
   static String getSplashView() => splashView;
   static String getOnboardingView() => onboardingView;
@@ -48,16 +52,13 @@ class AppRoute {
   static String getCreateNewPassView() => createNewPassView;
   static String getSignUpView() => signUpView;
   static String getUserBottomNavigationBarView() => userBottomNavigationBarView;
+  static String getClubBottomNavbarView() => clubBottomNavbarView;
   static String getNotificationView() => notificationView;
   static String getChangePasswordView() => changePasswordView;
   static String getGetStartedView() => getStartedView;
   static String getOtpVerificationView() => otpVerificationView;
   static String getPermissionView() => permissionView;
   static String getVibeSelectionView() => vibeSelectionView;
-
-
-
-
 
   static List<GetPage> routes = [
     GetPage(
@@ -89,10 +90,13 @@ class AppRoute {
     GetPage(
       name: userBottomNavigationBarView,
       page: () => UserBottomNavigationView(),
-      bindings: [
-        NavbarBindings(),
-        // HomeBindings()
-      ],
+      bindings: [UserBottomNavbarBindings(), UserHomeBindings(), HeatMapBinding()],
+    ),
+
+    GetPage(
+      name: clubBottomNavbarView,
+      page: () => ClubBottomNavbarView(),
+      binding: ClubBottomNavbarBinding(),
     ),
     // GetPage(
     //   name: notificationView,
@@ -105,7 +109,11 @@ class AppRoute {
     //   binding: ChangePasswordBinding(),
     // ),
     GetPage(name: getStartedView, page: () => GetStartedView()),
-    GetPage(name: otpVerificationView, page: () => OtpVerificationView()),
+    GetPage(
+      name: otpVerificationView,
+      page: () => OtpVerificationView(),
+      binding: OtpBinding(),
+    ),
 
     GetPage(
       name: permissionView,
@@ -113,14 +121,10 @@ class AppRoute {
       binding: PermissionsBinding(),
     ),
 
-
-
     GetPage(
       name: vibeSelectionView,
       page: () => const VibeSelectionView(),
       binding: VibeSelectionBinding(),
     ),
-
-
   ];
 }

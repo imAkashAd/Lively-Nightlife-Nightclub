@@ -70,7 +70,7 @@ class _RoleItem extends StatelessWidget {
         child: Center(
           child: TextProperty(
             text: title,
-            textColor: AppColors.blackColor,
+            textColor: isSelected ? AppColors.blackColor : AppColors.greyColor,
             fontSize: 14.sp,
             fontWeight: FontWeight.w500,
           ),

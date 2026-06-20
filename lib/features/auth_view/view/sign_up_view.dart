@@ -99,7 +99,7 @@ class SignUpView extends GetView<AuthController> {
                       GestureDetector(
                         onTap: () {
                           Get.bottomSheet(
-                            const DatePickerBottomSheet(),
+                            const DobPickerBottomSheet(),
                             isScrollControlled: true,
                             backgroundColor: Colors.transparent,
                           );

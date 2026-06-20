@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
-import 'package:lively_nightlife_nightclub_party/features/bottom_navigation_bar/controllers/bottom_navigation_bar_controller.dart';
+import 'package:lively_nightlife_nightclub_party/features/bottom_navigation_bar/controllers/user_bottom_navigation_bar_controller.dart';
 
-class NavbarBindings extends Bindings {
+class UserBottomNavbarBindings extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<BottomNavigationBarController>(
-      () => BottomNavigationBarController(),
+    Get.lazyPut<UserBottomNavbarController>(
+      () => UserBottomNavbarController(),
     );
     // Get.lazyPut<FeedViewController>(() => FeedViewController(), fenix: true);
     // Get.put<WatchlistController>(WatchlistController(), permanent: true);

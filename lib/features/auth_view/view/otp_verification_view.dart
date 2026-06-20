@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import 'package:lively_nightlife_nightclub_party/core/common/widgets/custom_button.dart';
 import 'package:lively_nightlife_nightclub_party/core/common/widgets/text_property.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/colors.dart';
+import 'package:lively_nightlife_nightclub_party/core/utils/constants/icon_path.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/image_path.dart';
 
 import '../controller/otp_controller.dart';
@@ -36,63 +38,56 @@ class OtpVerificationView extends GetView<OtpController> {
 
                   GestureDetector(
                     onTap: Get.back,
-                    child: Icon(
-                      Icons.arrow_back_ios_new,
-                      color: AppColors.whiteColor,
-                      size: 22.sp,
+                    child: SvgPicture.asset(
+                      IconPath.backArrowIcon,
+                      height: 24.h,
                     ),
                   ),
 
                   SizedBox(height: 60.h),
 
                   TextProperty(
-                    text: 'OTP Code Verification',
-                    textColor: AppColors.whiteColor,
-                    fontSize: 30.sp,
+                    text: 'OTP Code \nVerification',
+                    textColor: AppColors.blackColor,
+                    fontSize: 32.sp,
+                    fontFamily: 'Sora',
                     fontWeight: FontWeight.w700,
                   ),
 
                   SizedBox(height: 12.h),
 
                   TextProperty(
-                    text: 'Enter the 4 digit code sent to your email address.',
+                    text:
+                        'Code has been sent to your email address \n*******789@gmail.com.',
                     textColor: AppColors.greyColor,
                     fontSize: 14.sp,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.w500,
                   ),
 
                   SizedBox(height: 50.h),
 
                   Center(
                     child: OtpTextField(
+                      cursorColor: AppColors.primaryColor,
+                      showCursor: false,
                       numberOfFields: 4,
                       fieldWidth: 60.w,
                       fieldHeight: 60.h,
-
                       borderRadius: BorderRadius.circular(12.r),
-
                       enabledBorderColor: AppColors.defaultBorderColor,
-
                       focusedBorderColor: AppColors.primaryColor,
-
                       borderColor: AppColors.defaultBorderColor,
-
                       fillColor: Colors.transparent,
-
                       filled: true,
-
                       showFieldAsBox: true,
-
                       keyboardType: TextInputType.number,
-
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-
                       textStyle: TextStyle(
-                        color: AppColors.whiteColor,
-                        fontSize: 22.sp,
+                        color: AppColors.blackColor,
+                        fontFamily: 'Poppins',
+                        fontSize: 20.sp,
                         fontWeight: FontWeight.w600,
                       ),
-
                       onSubmit: controller.updateOtp,
                     ),
                   ),
