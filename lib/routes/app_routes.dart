@@ -25,6 +25,9 @@ import 'package:lively_nightlife_nightclub_party/features/onboarding_view/view/p
 import 'package:lively_nightlife_nightclub_party/features/onboarding_view/view/vibe_selection_view.dart';
 import 'package:lively_nightlife_nightclub_party/features/role/user/heat_map/bindings/heat_map_bindings.dart';
 import 'package:lively_nightlife_nightclub_party/features/role/user/home_view/bindings/user_home_bindings.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/notification/bindings/user_notification_bindings.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/notification/view/user_notification_read_view.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/notification/view/user_notification_view.dart';
 import 'package:lively_nightlife_nightclub_party/features/splash_view/bindings/splash_bindings.dart';
 import 'package:lively_nightlife_nightclub_party/features/splash_view/view/splash_view.dart';
 
@@ -44,6 +47,8 @@ class AppRoute {
   static const String otpVerificationView = '/otpVerificationView';
   static const String permissionView = '/permissionView';
   static const String vibeSelectionView = '/vibeSelectionView';
+  static const String userNotificationView = '/userNotificationView';
+  static const String userNotificationReadView = '/userNotificationReadView';
 
   static String getSplashView() => splashView;
   static String getOnboardingView() => onboardingView;
@@ -59,6 +64,8 @@ class AppRoute {
   static String getOtpVerificationView() => otpVerificationView;
   static String getPermissionView() => permissionView;
   static String getVibeSelectionView() => vibeSelectionView;
+  static String getUserNotificationView() => userNotificationView;
+  static String getUserNotificationReadView() => userNotificationReadView;
 
   static List<GetPage> routes = [
     GetPage(
@@ -125,6 +132,16 @@ class AppRoute {
       name: vibeSelectionView,
       page: () => const VibeSelectionView(),
       binding: VibeSelectionBinding(),
+    ),
+    GetPage(
+      name: userNotificationView,
+      page: () => const UserNotificationView(),
+      binding: UserNotificationBinding(),
+    ),
+    GetPage(
+      name: userNotificationReadView,
+      page: () => const UserNotificationReadView(),
+      // binding: UserNotificationBinding(),
     ),
   ];
 }

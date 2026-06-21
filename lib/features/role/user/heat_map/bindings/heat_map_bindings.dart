@@ -5,6 +5,6 @@ import 'package:lively_nightlife_nightclub_party/features/role/user/heat_map/con
 class HeatMapBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<HeatMapController>(() => HeatMapController());
+    Get.lazyPut<HeatMapController>(() => HeatMapController(),fenix: true,);
   }
 }

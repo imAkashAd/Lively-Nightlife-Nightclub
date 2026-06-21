@@ -27,4 +27,12 @@ class IconPath {
   static const String notificationBellIcon = 'assets/icons/bellicon.svg';  
   static const String flameIcon = 'assets/icons/flameIconforHeatmap.svg';  
   static const String filterIcon = 'assets/icons/filterIcon.svg';  
+  static const String userAvatar = 'assets/icons/userAvatar.svg';  
+  static const String notifyLikeIcon = 'assets/icons/notifyLike.svg';  
+  static const String notifyFollowIcon = 'assets/icons/notifyFollow.svg';  
+  static const String notifyCommentIcon = 'assets/icons/notifyComment.svg';  
+  static const String notifyCalendarIcon = 'assets/icons/notifyCal.svg';  
+  static const String notifyEventIcon = 'assets/icons/notifyEvent.svg';  
+  static const String notifyTicketConfirmIcon = 'assets/icons/notifyTicketConfirm.svg';  
+  static const String notifyCheckIcon = 'assets/icons/notifyCheckIn.svg';  
 }

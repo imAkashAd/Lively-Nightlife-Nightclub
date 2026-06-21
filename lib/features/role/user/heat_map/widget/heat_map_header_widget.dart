@@ -6,29 +6,29 @@ import 'package:lively_nightlife_nightclub_party/core/common/widgets/custom_text
 import 'package:lively_nightlife_nightclub_party/core/common/widgets/text_property.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/colors.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/icon_path.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/heat_map/controller/heat_map_controller.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/heat_map/widget/heat_map_filter_bottom_sheet.dart';
 
 class HeatMapHeaderWidget extends StatelessWidget {
   const HeatMapHeaderWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+      final controller = Get.find<HeatMapController>();
     return Column(
       children: [
         /// TOP BAR
         Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             GestureDetector(
               onTap: () {
                 Get.back();
               },
-              child: Icon(
-                Icons.arrow_back_ios_new,
-                size: 22.sp,
-                color: AppColors.blackColor,
-              ),
+              child: SvgPicture.asset(IconPath.backButton, height: 16.h),
             ),
 
-            SizedBox(width: 10.w),
+            SizedBox(width: 12.w),
 
             TextProperty(
               text: 'lively',
@@ -63,9 +63,12 @@ class HeatMapHeaderWidget extends StatelessWidget {
           children: [
             Expanded(
               child: CustomTextfield(
+                controller: controller.searchController,
+
                 fieldText: 'Search clubs, people...',
-                fillColor: AppColors.whiteColor,
+                fillColor: AppColors.greyColor.withValues(alpha: .05),
                 borderRadius: 100.r,
+                onChanged: controller.updateSearch,
               ),
             ),
 
@@ -73,22 +76,25 @@ class HeatMapHeaderWidget extends StatelessWidget {
 
             GestureDetector(
               onTap: () {
-                // next step
+                Get.bottomSheet(
+                  const HeatMapFilterBottomSheet(),
+                  isScrollControlled: true,
+                );
               },
               child: Container(
                 width: 52.w,
                 height: 52.h,
 
                 decoration: BoxDecoration(
-                  color: AppColors.whiteColor,
+                  color: AppColors.greyColor.withValues(alpha: .05),
                   shape: BoxShape.circle,
 
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(.05),
-                      blurRadius: 12,
-                    ),
-                  ],
+                  // boxShadow: [
+                  //   BoxShadow(
+                  //     color: Colors.black.withOpacity(.05),
+                  //     blurRadius: 12,
+                  //   ),
+                  // ],
                 ),
 
                 child: Center(

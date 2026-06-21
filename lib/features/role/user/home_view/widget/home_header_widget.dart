@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:lively_nightlife_nightclub_party/core/common/widgets/text_property.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/colors.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/icon_path.dart';
+import 'package:lively_nightlife_nightclub_party/routes/app_routes.dart';
 
 class HomeHeaderWidget extends StatelessWidget {
   const HomeHeaderWidget({super.key});
@@ -27,7 +29,7 @@ class HomeHeaderWidget extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                // notification page later
+                Get.toNamed(AppRoute.userNotificationView);
               },
               child: SvgPicture.asset(
                 IconPath.notificationBellIcon,

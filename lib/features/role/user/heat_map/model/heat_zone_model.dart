@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-
 import 'club_post_model.dart';
 
 class HeatZoneModel {
@@ -14,9 +13,12 @@ class HeatZoneModel {
 
   final double distance;
 
-  final RxBool isFollowing;
+  final double top;
+  final double left;
 
   final List<ClubPostModel> posts;
+
+  final RxBool isFollowing = false.obs;
 
   HeatZoneModel({
     required this.id,
@@ -27,21 +29,24 @@ class HeatZoneModel {
     required this.ticketsSold,
     required this.distance,
     required this.posts,
-    bool isFollowing = false,
-  }) : isFollowing = isFollowing.obs;
+    required this.top,
+    required this.left,
+  });
 
-  double get heatPercentage => (ticketsSold / capacity) * 100;
+  double get heatPercentage {
+    return (ticketsSold / capacity) * 100;
+  }
 
   String get heatLevel {
-    if (heatPercentage >= 80) {
+    if (heatPercentage >= 90) {
       return 'Insane';
     }
 
-    if (heatPercentage >= 60) {
+    if (heatPercentage >= 70) {
       return 'Hot';
     }
 
-    if (heatPercentage >= 40) {
+    if (heatPercentage >= 50) {
       return 'Active';
     }
 

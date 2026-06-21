@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lively_nightlife_nightclub_party/core/common/widgets/text_property.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/colors.dart';
+import 'package:lively_nightlife_nightclub_party/core/utils/constants/icon_path.dart';
+import 'package:lively_nightlife_nightclub_party/core/utils/constants/image_path.dart';
 import 'package:lively_nightlife_nightclub_party/features/role/user/heat_map/controller/heat_map_controller.dart';
 import 'heat_club_post_card_widget.dart';
 import 'heat_zone_selected_widget.dart';
@@ -13,6 +16,7 @@ class HeatMapBottomSheetWidget extends GetView<HeatMapController> {
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
+      controller: controller.draggableController,
       initialChildSize: .16,
       minChildSize: .16,
       maxChildSize: .92,
@@ -51,48 +55,40 @@ class HeatMapBottomSheetWidget extends GetView<HeatMapController> {
 
                   TextProperty(
                     text: 'Popular Heat Zones',
-                    textColor: AppColors.blackColor,
+                    textColor: AppColors.secondBlackColor,
+                    fontFamily: 'Sora',
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w700,
                   ),
 
                   SizedBox(height: 16.h),
 
-                  ...controller.filteredZones.map((zone) {
+                  ...controller.visibleZones.map((zone) {
                     return GestureDetector(
                       onTap: () {
                         controller.selectZone(zone);
                       },
 
                       child: Container(
-                        margin: EdgeInsets.only(bottom: 14.h),
+                        margin: EdgeInsets.only(bottom: 16.h),
 
-                        padding: EdgeInsets.all(14.w),
+                        padding: EdgeInsets.all(12.w),
 
                         decoration: BoxDecoration(
                           color: AppColors.grey100Color,
-
-                          borderRadius: BorderRadius.circular(18.r),
+                          borderRadius: BorderRadius.circular(20.r),
                         ),
 
                         child: Row(
                           children: [
-                            Container(
-                              width: 50.w,
-                              height: 50.w,
-
-                              decoration: BoxDecoration(
-                                color: _zoneColor(zone.heatPercentage),
-                                shape: BoxShape.circle,
-                              ),
-
-                              alignment: Alignment.center,
-
-                              child: TextProperty(
-                                text: '${zone.heatPercentage.toInt()}%',
-                                textColor: Colors.white,
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w700,
+                            /// CLUB IMAGE
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(14.r),
+                              child: Image.asset(
+                                ImagePath.feedImage,
+                                width: 65.w,
+                                height: 65.w,
+                                fit: BoxFit.cover,
                               ),
                             ),
 
@@ -112,6 +108,15 @@ class HeatMapBottomSheetWidget extends GetView<HeatMapController> {
                                   SizedBox(height: 4.h),
 
                                   TextProperty(
+                                    text: zone.heatLevel,
+                                    textColor: _zoneColor(zone.heatPercentage),
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+
+                                  SizedBox(height: 4.h),
+
+                                  TextProperty(
                                     text: '${zone.distance} km away',
                                     textColor: AppColors.greyColor,
                                     fontSize: 12.sp,
@@ -121,9 +126,22 @@ class HeatMapBottomSheetWidget extends GetView<HeatMapController> {
                               ),
                             ),
 
-                            Icon(
-                              Icons.keyboard_arrow_right,
-                              color: AppColors.greyColor,
+                            Column(
+                              children: [
+                                TextProperty(
+                                  text: '${zone.heatPercentage.toInt()}%',
+                                  textColor: _zoneColor(zone.heatPercentage),
+                                  fontSize: 18.sp,
+                                  fontWeight: FontWeight.w700,
+                                ),
+
+                                SizedBox(height: 4.h),
+
+                                Icon(
+                                  Icons.chevron_right,
+                                  color: AppColors.greyColor,
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -133,15 +151,34 @@ class HeatMapBottomSheetWidget extends GetView<HeatMapController> {
                 ]
                 /// SELECTED CLUB STATE
                 else ...[
-                  HeatZoneSelectedWidget(zone: controller.selectedZone.value!),
-
+                  // HeatZoneSelectedWidget(zone: controller.selectedZone.value!),
                   SizedBox(height: 12.h),
 
-                  TextProperty(
-                    text: 'Live Activity Feed',
-                    textColor: AppColors.blackColor,
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.w700,
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          final controller = Get.find<HeatMapController>();
+
+                          controller.selectedZone.value = null;
+
+                          controller.draggableController.animateTo(
+                            .16,
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeOut,
+                          );
+                        },
+
+                        child: Icon(Icons.arrow_back_ios, size: 18.sp),
+                      ),
+                      SizedBox(width: 12.w),
+                      TextProperty(
+                        text: 'Live Activity Feed',
+                        textColor: AppColors.blackColor,
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ],
                   ),
 
                   SizedBox(height: 16.h),
@@ -160,35 +197,36 @@ class HeatMapBottomSheetWidget extends GetView<HeatMapController> {
 
   Widget _statisticsSection() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 20.h),
+      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 18.h),
 
       decoration: BoxDecoration(
-        color: AppColors.grey100Color,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(20.r),
+        border: Border.all(color: AppColors.grey100Color),
       ),
 
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _statItem('34.6k', 'Active'),
+          _statItem('34.6k', 'Active Now', AppColors.insaneColor),
 
-          _statItem('47', 'Hot'),
+          _statItem('47', 'Hot Events', AppColors.activeColor),
 
-          _statItem('128', 'Open'),
+          _statItem('128', 'Clubs Open', AppColors.hotColor),
 
-          _statItem('6', 'Zones'),
+          _statItem('6', 'Heat Zones', AppColors.mildColor),
         ],
       ),
     );
   }
 
-  Widget _statItem(String value, String title) {
+  Widget _statItem(String value, String title, Color textColor) {
     return Column(
       children: [
         TextProperty(
           text: value,
-          textColor: AppColors.blackColor,
-          fontSize: 20.sp,
+          textColor: textColor,
+          fontSize: 18.sp,
           fontWeight: FontWeight.w700,
         ),
 
@@ -196,9 +234,9 @@ class HeatMapBottomSheetWidget extends GetView<HeatMapController> {
 
         TextProperty(
           text: title,
-          textColor: AppColors.greyColor,
-          fontSize: 12.sp,
-          fontWeight: FontWeight.w500,
+          textColor: AppColors.lightGreyColor,
+          fontSize: 10.sp,
+          fontWeight: FontWeight.w400,
         ),
       ],
     );
