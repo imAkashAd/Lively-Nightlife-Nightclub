@@ -24,19 +24,24 @@ import 'package:lively_nightlife_nightclub_party/features/onboarding_view/view/o
 import 'package:lively_nightlife_nightclub_party/features/onboarding_view/view/permission_view.dart';
 import 'package:lively_nightlife_nightclub_party/features/onboarding_view/view/vibe_selection_view.dart';
 import 'package:lively_nightlife_nightclub_party/features/role/user/heat_map/bindings/heat_map_bindings.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/home_view/bindings/user_home_bindings.dart';
 import 'package:lively_nightlife_nightclub_party/features/role/user/notification/bindings/user_notification_bindings.dart';
 import 'package:lively_nightlife_nightclub_party/features/role/user/notification/view/user_notification_read_view.dart';
 import 'package:lively_nightlife_nightclub_party/features/role/user/notification/view/user_notification_view.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_chat_view/bindings/user_chat_binding.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_chat_view/view/user_chat_screen_view.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_club_details/bindings/user_club_details_binding.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_club_details/view/user_club_details_view.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_discover_view/bindings/user_discover_binding.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_events/bindings/user_event_binding.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_events/view/user_event_details_view.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_home_view/bindings/user_home_bindings.dart';
 import 'package:lively_nightlife_nightclub_party/features/splash_view/bindings/splash_bindings.dart';
 import 'package:lively_nightlife_nightclub_party/features/splash_view/view/splash_view.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/discover_view/bindings/user_discover_binding.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/club_details/bindings/user_club_details_binding.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/club_details/view/user_club_details_view.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/chat_view/bindings/user_chat_binding.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/chat_view/view/user_chat_screen_view.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/events/bindings/user_event_binding.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/events/view/user_event_details_view.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_profile/bindings/user_profile_binding.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_profile/view/user_profile_view.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_profile/view/user_followers_view.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_profile/view/user_following_view.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_profile/view/user_other_profile_view.dart';
 
 class AppRoute {
   static const String splashView = '/splashView';
@@ -59,6 +64,10 @@ class AppRoute {
   static const String userClubDetailsView = '/userClubDetailsView';
   static const String userChatScreenView = '/userChatScreenView';
   static const String userEventDetailsView = '/userEventDetailsView';
+  static const String userProfileView = '/userProfileView';
+  static const String userFollowersView = '/userFollowersView';
+  static const String userFollowingView = '/userFollowingView';
+  static const String userOtherProfileView = '/userOtherProfileView';
 
   static String getSplashView() => splashView;
   static String getOnboardingView() => onboardingView;
@@ -79,6 +88,10 @@ class AppRoute {
   static String getUserClubDetailsView() => userClubDetailsView;
   static String getUserChatScreenView() => userChatScreenView;
   static String getUserEventDetailsView() => userEventDetailsView;
+  static String getUserProfileView() => userProfileView;
+  static String getUserFollowersView() => userFollowersView;
+  static String getUserFollowingView() => userFollowingView;
+  static String getUserOtherProfileView() => userOtherProfileView;
 
   static List<GetPage> routes = [
     GetPage(
@@ -110,7 +123,12 @@ class AppRoute {
     GetPage(
       name: userBottomNavigationBarView,
       page: () => UserBottomNavigationView(),
-      bindings: [UserBottomNavbarBindings(), UserHomeBindings(), HeatMapBinding(), UserDiscoverBinding()],
+      bindings: [
+        UserBottomNavbarBindings(),
+        UserHomeBindings(),
+        HeatMapBinding(),
+        UserDiscoverBinding(),
+      ],
     ),
 
     GetPage(
@@ -170,6 +188,26 @@ class AppRoute {
       name: userEventDetailsView,
       page: () => const UserEventDetailsView(),
       binding: UserEventBinding(),
+    ),
+    GetPage(
+      name: userProfileView,
+      page: () => const UserProfileView(),
+      binding: UserProfileBinding(),
+    ),
+    GetPage(
+      name: userFollowersView,
+      page: () => const UserFollowersView(),
+      binding: UserProfileBinding(),
+    ),
+    GetPage(
+      name: userFollowingView,
+      page: () => const UserFollowingView(),
+      binding: UserProfileBinding(),
+    ),
+    GetPage(
+      name: userOtherProfileView,
+      page: () => const UserOtherProfileView(),
+      binding: UserProfileBinding(),
     ),
   ];
 }

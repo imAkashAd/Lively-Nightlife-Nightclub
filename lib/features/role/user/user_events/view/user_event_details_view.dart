@@ -6,6 +6,7 @@ import 'package:lively_nightlife_nightclub_party/core/common/widgets/text_proper
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/colors.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/icon_path.dart';
 import 'package:lively_nightlife_nightclub_party/core/common/widgets/custom_button.dart';
+import 'package:lively_nightlife_nightclub_party/routes/app_routes.dart';
 import '../controller/user_event_controller.dart';
 import '../model/user_event_model.dart';
 import '../widget/user_event_artist_capsule.dart';
@@ -334,10 +335,13 @@ class UserEventDetailsView extends StatelessWidget {
                   ],
                 ),
                 SizedBox(width: 16.w),
-                CircleAvatar(
-                  radius: 18.r,
-                  backgroundImage: const NetworkImage(
-                    'https://i.pravatar.cc/150?img=10',
+                GestureDetector(
+                  onTap: () => Get.toNamed(AppRoute.userProfileView),
+                  child: CircleAvatar(
+                    radius: 18.r,
+                    backgroundImage: const NetworkImage(
+                      'https://i.pravatar.cc/150?img=10',
+                    ),
                   ),
                 ),
               ],

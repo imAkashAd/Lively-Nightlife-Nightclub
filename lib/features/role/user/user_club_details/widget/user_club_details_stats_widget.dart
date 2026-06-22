@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:lively_nightlife_nightclub_party/core/common/widgets/text_property.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/colors.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/icon_path.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/club_details/controller/user_club_details_controller.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_club_details/controller/user_club_details_controller.dart';
 
 class UserClubDetailsStatsWidget extends StatelessWidget {
   final UserClubDetailsController controller;

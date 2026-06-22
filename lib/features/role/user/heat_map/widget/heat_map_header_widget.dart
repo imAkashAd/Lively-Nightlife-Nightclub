@@ -8,6 +8,7 @@ import 'package:lively_nightlife_nightclub_party/core/utils/constants/colors.dar
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/icon_path.dart';
 import 'package:lively_nightlife_nightclub_party/features/role/user/heat_map/controller/heat_map_controller.dart';
 import 'package:lively_nightlife_nightclub_party/features/role/user/heat_map/widget/heat_map_filter_bottom_sheet.dart';
+import 'package:lively_nightlife_nightclub_party/routes/app_routes.dart';
 
 class HeatMapHeaderWidget extends StatelessWidget {
   const HeatMapHeaderWidget({super.key});
@@ -40,16 +41,18 @@ class HeatMapHeaderWidget extends StatelessWidget {
 
             const Spacer(),
 
-            CircleAvatar(
-              radius: 20.r,
-              backgroundColor: AppColors.primaryColor.withOpacity(.15),
-
-              child: ClipOval(
-                child: Image.network(
-                  'https://i.pravatar.cc/150?img=12',
-                  fit: BoxFit.cover,
-                  width: 40.w,
-                  height: 40.h,
+            GestureDetector(
+              onTap: () => Get.toNamed(AppRoute.userProfileView),
+              child: CircleAvatar(
+                radius: 20.r,
+                backgroundColor: AppColors.primaryColor.withValues(alpha: 0.15),
+                child: ClipOval(
+                  child: Image.network(
+                    'https://i.pravatar.cc/150?img=12',
+                    fit: BoxFit.cover,
+                    width: 40.w,
+                    height: 40.h,
+                  ),
                 ),
               ),
             ),

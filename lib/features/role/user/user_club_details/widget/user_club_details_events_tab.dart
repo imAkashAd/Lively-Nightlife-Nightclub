@@ -6,7 +6,7 @@ import 'package:lively_nightlife_nightclub_party/core/common/widgets/text_proper
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/colors.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/icon_path.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/image_path.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/events/controller/user_event_controller.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_events/controller/user_event_controller.dart';
 
 class UserClubDetailsEventsTab extends StatelessWidget {
   const UserClubDetailsEventsTab({super.key});
@@ -44,13 +44,12 @@ class UserClubDetailsEventsTab extends StatelessWidget {
             ? Get.find<UserEventController>()
             : Get.put(UserEventController());
         final matchedEvent = eventController.eventsList.firstWhere(
-          (e) => e.name.toLowerCase().contains(event.title.toLowerCase()) || event.title.toLowerCase().contains(e.name.toLowerCase()),
+          (e) =>
+              e.name.toLowerCase().contains(event.title.toLowerCase()) ||
+              event.title.toLowerCase().contains(e.name.toLowerCase()),
           orElse: () => eventController.eventsList.first,
         );
-        Get.toNamed(
-          '/userEventDetailsView',
-          arguments: matchedEvent,
-        );
+        Get.toNamed('/userEventDetailsView', arguments: matchedEvent);
       },
       child: Container(
         margin: EdgeInsets.only(bottom: 16.h),
@@ -60,117 +59,117 @@ class UserClubDetailsEventsTab extends StatelessWidget {
           borderRadius: BorderRadius.circular(16.r),
         ),
         child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Event Image
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12.r),
-            child: Image.asset(
-              event.image,
-              width: 80.w,
-              height: 100.h,
-              fit: BoxFit.cover,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Event Image
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12.r),
+              child: Image.asset(
+                event.image,
+                width: 80.w,
+                height: 100.h,
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          SizedBox(width: 12.w),
+            SizedBox(width: 12.w),
 
-          // Event Details
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextProperty(
-                  text: event.title,
-                  textColor: AppColors.blackColor,
-                  fontFamily: 'Sora',
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w700,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                SizedBox(height: 6.h),
+            // Event Details
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextProperty(
+                    text: event.title,
+                    textColor: AppColors.blackColor,
+                    fontFamily: 'Sora',
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w700,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  SizedBox(height: 6.h),
 
-                // Date row
-                Row(
-                  children: [
-                    SvgPicture.asset(IconPath.calendarIcon),
-                    SizedBox(width: 6.w),
-                    TextProperty(
-                      text: event.date,
-                      textColor: AppColors.lightGreyColor,
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ],
-                ),
-                SizedBox(height: 4.h),
-
-                // Location row
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      IconPath.eventLocationIcon,
-                      colorFilter: const ColorFilter.mode(
-                        AppColors.lightGreyColor,
-                        BlendMode.srcIn,
+                  // Date row
+                  Row(
+                    children: [
+                      SvgPicture.asset(IconPath.calendarIcon),
+                      SizedBox(width: 6.w),
+                      TextProperty(
+                        text: event.date,
+                        textColor: AppColors.lightGreyColor,
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w400,
                       ),
-                    ),
-                    SizedBox(width: 6.w),
-                    TextProperty(
-                      text: event.location,
-                      textColor: AppColors.lightGreyColor,
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ],
-                ),
-                SizedBox(height: 8.h),
+                    ],
+                  ),
+                  SizedBox(height: 4.h),
 
-                // Tags & Price Row
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Wrap(
-                        spacing: 6.w,
-                        children: event.categories.map((cat) {
-                          return Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 12.w,
-                              vertical: 4.h,
-                            ),
-                            decoration: BoxDecoration(
-                              color: AppColors.purpleColor.withValues(
-                                alpha: 0.1,
+                  // Location row
+                  Row(
+                    children: [
+                      SvgPicture.asset(
+                        IconPath.eventLocationIcon,
+                        colorFilter: const ColorFilter.mode(
+                          AppColors.lightGreyColor,
+                          BlendMode.srcIn,
+                        ),
+                      ),
+                      SizedBox(width: 6.w),
+                      TextProperty(
+                        text: event.location,
+                        textColor: AppColors.lightGreyColor,
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 8.h),
+
+                  // Tags & Price Row
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Wrap(
+                          spacing: 6.w,
+                          children: event.categories.map((cat) {
+                            return Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 12.w,
+                                vertical: 4.h,
                               ),
-                              borderRadius: BorderRadius.circular(100.r),
-                            ),
-                            child: TextProperty(
-                              text: cat,
-                              textColor: AppColors.purpleColor,
-                              fontSize: 10.sp,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          );
-                        }).toList(),
+                              decoration: BoxDecoration(
+                                color: AppColors.purpleColor.withValues(
+                                  alpha: 0.1,
+                                ),
+                                borderRadius: BorderRadius.circular(100.r),
+                              ),
+                              child: TextProperty(
+                                text: cat,
+                                textColor: AppColors.purpleColor,
+                                fontSize: 10.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            );
+                          }).toList(),
+                        ),
                       ),
-                    ),
-                    TextProperty(
-                      text: event.price,
-                      textColor: AppColors.blackColor,
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ],
-                ),
-              ],
+                      TextProperty(
+                        text: event.price,
+                        textColor: AppColors.blackColor,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 }
 
 class _EventData {

@@ -5,17 +5,14 @@ import 'package:get/get.dart';
 import 'package:lively_nightlife_nightclub_party/core/common/widgets/text_property.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/colors.dart';
 import 'package:lively_nightlife_nightclub_party/routes/app_routes.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/discover_view/model/user_discover_club_model.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/events/controller/user_event_controller.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_discover_view/model/user_discover_club_model.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_events/controller/user_event_controller.dart';
 import '../model/user_message_model.dart';
 
 class UserChatMessageBubble extends StatelessWidget {
   final UserMessageModel message;
 
-  const UserChatMessageBubble({
-    super.key,
-    required this.message,
-  });
+  const UserChatMessageBubble({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +22,15 @@ class UserChatMessageBubble extends StatelessWidget {
       return Padding(
         padding: EdgeInsets.only(bottom: 16.h),
         child: Column(
-          crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+          crossAxisAlignment: isMe
+              ? CrossAxisAlignment.end
+              : CrossAxisAlignment.start,
           children: [
             Row(
-              mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
-              children: [
-                _buildSharedEventCard(message.sharedClubOrEvent!),
-              ],
+              mainAxisAlignment: isMe
+                  ? MainAxisAlignment.end
+                  : MainAxisAlignment.start,
+              children: [_buildSharedEventCard(message.sharedClubOrEvent!)],
             ),
             SizedBox(height: 4.h),
             Padding(
@@ -51,10 +50,14 @@ class UserChatMessageBubble extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(bottom: 16.h),
       child: Column(
-        crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        crossAxisAlignment: isMe
+            ? CrossAxisAlignment.end
+            : CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+            mainAxisAlignment: isMe
+                ? MainAxisAlignment.end
+                : MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (!isMe) ...[
@@ -69,8 +72,12 @@ class UserChatMessageBubble extends StatelessWidget {
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(16.r),
                       topRight: Radius.circular(16.r),
-                      bottomLeft: isMe ? Radius.circular(16.r) : Radius.circular(4.r),
-                      bottomRight: isMe ? Radius.circular(4.r) : Radius.circular(16.r),
+                      bottomLeft: isMe
+                          ? Radius.circular(16.r)
+                          : Radius.circular(4.r),
+                      bottomRight: isMe
+                          ? Radius.circular(4.r)
+                          : Radius.circular(16.r),
                     ),
                   ),
                   child: _buildBubbleContent(),
@@ -111,14 +118,8 @@ class UserChatMessageBubble extends StatelessWidget {
       return ClipRRect(
         borderRadius: BorderRadius.circular(12.r),
         child: message.imagePath!.startsWith('http')
-            ? Image.network(
-                message.imagePath!,
-                fit: BoxFit.cover,
-              )
-            : Image.file(
-                File(message.imagePath!),
-                fit: BoxFit.cover,
-              ),
+            ? Image.network(message.imagePath!, fit: BoxFit.cover)
+            : Image.file(File(message.imagePath!), fit: BoxFit.cover),
       );
     }
 
@@ -174,12 +175,14 @@ class UserChatMessageBubble extends StatelessWidget {
               SizedBox(width: 20.w),
               TextProperty(
                 text: message.fileSize ?? '0 B',
-                textColor: isMe ? AppColors.greyColor : AppColors.whiteColor.withValues(alpha: 0.8),
+                textColor: isMe
+                    ? AppColors.greyColor
+                    : AppColors.whiteColor.withValues(alpha: 0.8),
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w400,
               ),
             ],
-          )
+          ),
         ],
       );
     }
@@ -194,7 +197,9 @@ class UserChatMessageBubble extends StatelessWidget {
   }
 
   String _formatTime(DateTime time) {
-    final hour = time.hour > 12 ? time.hour - 12 : (time.hour == 0 ? 12 : time.hour);
+    final hour = time.hour > 12
+        ? time.hour - 12
+        : (time.hour == 0 ? 12 : time.hour);
     final min = time.minute.toString().padLeft(2, '0');
     final period = time.hour >= 12 ? 'PM' : 'AM';
     return '$hour.$min $period';
@@ -208,18 +213,14 @@ class UserChatMessageBubble extends StatelessWidget {
               ? Get.find<UserEventController>()
               : Get.put(UserEventController());
           final matchedEvent = eventController.eventsList.firstWhere(
-            (e) => e.name.toLowerCase() == item.name.toLowerCase() || e.id == item.id.toString(),
+            (e) =>
+                e.name.toLowerCase() == item.name.toLowerCase() ||
+                e.id == item.id.toString(),
             orElse: () => eventController.eventsList.first,
           );
-          Get.toNamed(
-            AppRoute.userEventDetailsView,
-            arguments: matchedEvent,
-          );
+          Get.toNamed(AppRoute.userEventDetailsView, arguments: matchedEvent);
         } else {
-          Get.toNamed(
-            AppRoute.userClubDetailsView,
-            arguments: item,
-          );
+          Get.toNamed(AppRoute.userClubDetailsView, arguments: item);
         }
       },
       child: Container(
@@ -232,7 +233,7 @@ class UserChatMessageBubble extends StatelessWidget {
               color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 10,
               offset: const Offset(0, 4),
-            )
+            ),
           ],
         ),
         child: Column(
@@ -263,7 +264,11 @@ class UserChatMessageBubble extends StatelessWidget {
                   SizedBox(height: 4.h),
                   Row(
                     children: [
-                      Icon(Icons.location_on, color: AppColors.blueColor, size: 12.sp),
+                      Icon(
+                        Icons.location_on,
+                        color: AppColors.blueColor,
+                        size: 12.sp,
+                      ),
                       SizedBox(width: 4.w),
                       Expanded(
                         child: TextProperty(
@@ -279,7 +284,10 @@ class UserChatMessageBubble extends StatelessWidget {
                   ),
                   SizedBox(height: 8.h),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 8.w,
+                      vertical: 4.h,
+                    ),
                     decoration: BoxDecoration(
                       color: AppColors.blueColor.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(20.r),

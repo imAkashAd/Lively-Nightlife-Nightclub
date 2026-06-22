@@ -1,15 +1,16 @@
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/colors.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/chat_view/controller/user_chat_controller.dart';
-import '../../discover_view/model/user_discover_club_model.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_chat_view/controller/user_chat_controller.dart';
+import '../../user_discover_view/model/user_discover_club_model.dart';
 
 class UserClubDetailsController extends GetxController {
   late final UserDiscoverClubModel club;
-  
+
   // States
   final RxBool isFollowing = false.obs;
-  final RxInt selectedSubTab = 0.obs; // 0: About, 1: Events, 2: Gallery, 3: Reviews
+  final RxInt selectedSubTab =
+      0.obs; // 0: About, 1: Events, 2: Gallery, 3: Reviews
   final RxString followersText = ''.obs;
 
   @override
@@ -23,7 +24,9 @@ class UserClubDetailsController extends GetxController {
     isFollowing.toggle();
     if (isFollowing.value) {
       if (club.followersCount.toLowerCase().endsWith('k')) {
-        final doubleVal = double.tryParse(club.followersCount.substring(0, club.followersCount.length - 1));
+        final doubleVal = double.tryParse(
+          club.followersCount.substring(0, club.followersCount.length - 1),
+        );
         if (doubleVal != null) {
           followersText.value = '${(doubleVal + 1).toInt()}k';
         } else {
@@ -42,7 +45,9 @@ class UserClubDetailsController extends GetxController {
   }
 
   Future<void> shareExternally() async {
-    await Share.share('Check out ${club.name} on Lively! Location: ${club.location}');
+    await Share.share(
+      'Check out ${club.name} on Lively! Location: ${club.location}',
+    );
   }
 
   void shareInApp(String userName) {

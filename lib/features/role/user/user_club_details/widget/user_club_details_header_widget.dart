@@ -7,7 +7,7 @@ import 'package:lively_nightlife_nightclub_party/core/common/widgets/text_proper
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/colors.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/icon_path.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/image_path.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/club_details/controller/user_club_details_controller.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_club_details/controller/user_club_details_controller.dart';
 import 'package:lively_nightlife_nightclub_party/routes/app_routes.dart';
 import 'user_club_share_bottom_sheet.dart';
 

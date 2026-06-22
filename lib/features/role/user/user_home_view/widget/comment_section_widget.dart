@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lively_nightlife_nightclub_party/core/common/widgets/custom_button.dart';
 import 'package:lively_nightlife_nightclub_party/core/common/widgets/custom_textfield.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/colors.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/home_view/controller/user_home_controller.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/home_view/model/feed_post_model.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_home_view/controller/user_home_controller.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_home_view/model/feed_post_model.dart';
 
 class CommentSectionWidget extends StatelessWidget {
   final FeedPostModel post;

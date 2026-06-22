@@ -21,7 +21,13 @@ class UserEventInfoRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SvgPicture.asset(icon, height: 16.h, color: iconColor),
+        SvgPicture.asset(
+          icon,
+          height: 16.h,
+          colorFilter: iconColor != null
+              ? ColorFilter.mode(iconColor!, BlendMode.srcIn)
+              : null,
+        ),
         SizedBox(width: 10.w),
         Expanded(
           child: TextProperty(

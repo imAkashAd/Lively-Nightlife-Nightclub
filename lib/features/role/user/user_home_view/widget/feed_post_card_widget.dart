@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lively_nightlife_nightclub_party/core/common/widgets/text_property.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/colors.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/home_view/model/feed_post_model.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/home_view/widget/feed_post_action_widget.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/home_view/widget/feed_post_header_widget.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_home_view/model/feed_post_model.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_home_view/widget/feed_post_action_widget.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_home_view/widget/feed_post_header_widget.dart';
 
 class FeedPostCardWidget extends StatelessWidget {
   final FeedPostModel post;

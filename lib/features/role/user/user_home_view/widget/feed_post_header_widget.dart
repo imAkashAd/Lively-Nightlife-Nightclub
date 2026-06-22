@@ -5,15 +5,12 @@ import 'package:get/get.dart';
 import 'package:lively_nightlife_nightclub_party/core/common/widgets/text_property.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/colors.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/icon_path.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/home_view/model/feed_post_model.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_home_view/model/feed_post_model.dart';
 
 class FeedPostHeaderWidget extends StatelessWidget {
   final FeedPostModel post;
 
-  const FeedPostHeaderWidget({
-    super.key,
-    required this.post,
-  });
+  const FeedPostHeaderWidget({super.key, required this.post});
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +26,7 @@ class FeedPostHeaderWidget extends StatelessWidget {
           ),
           child: CircleAvatar(
             radius: 18.r,
-            backgroundImage:
-                NetworkImage(post.profileImage),
+            backgroundImage: NetworkImage(post.profileImage),
           ),
         ),
 
@@ -38,8 +34,7 @@ class FeedPostHeaderWidget extends StatelessWidget {
 
         Expanded(
           child: Column(
-            crossAxisAlignment:
-                CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
@@ -58,14 +53,10 @@ class FeedPostHeaderWidget extends StatelessWidget {
                         post.isFollowing.toggle();
                       },
                       child: TextProperty(
-                        text: post.isFollowing.value
-                            ? 'Following'
-                            : 'Follow',
-                        textColor:
-                            AppColors.primaryColor,
+                        text: post.isFollowing.value ? 'Following' : 'Follow',
+                        textColor: AppColors.primaryColor,
                         fontSize: 12.sp,
-                        fontWeight:
-                            FontWeight.w600,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
@@ -75,8 +66,7 @@ class FeedPostHeaderWidget extends StatelessWidget {
               SizedBox(height: 2.h),
 
               TextProperty(
-                text:
-                    '📍 ${post.location} • ${post.time}',
+                text: '📍 ${post.location} • ${post.time}',
                 textColor: AppColors.greyColor,
                 fontSize: 11.sp,
                 fontWeight: FontWeight.w400,
@@ -87,15 +77,9 @@ class FeedPostHeaderWidget extends StatelessWidget {
 
         PopupMenuButton<String>(
           color: AppColors.whiteColor,
-          icon: SvgPicture.asset(
-            IconPath.threeDotIcon,
-            width: 20.w,
-          ),
+          icon: SvgPicture.asset(IconPath.threeDotIcon, width: 20.w),
           onSelected: (value) {
-            Get.snackbar(
-              'Action',
-              value,
-            );
+            Get.snackbar('Action', value);
           },
           itemBuilder: (context) => [
             const PopupMenuItem(

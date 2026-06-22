@@ -7,9 +7,9 @@ import 'package:lively_nightlife_nightclub_party/core/utils/constants/image_path
 import 'package:lively_nightlife_nightclub_party/features/role/user/heat_map/controller/heat_map_controller.dart';
 import 'package:lively_nightlife_nightclub_party/features/role/user/heat_map/model/club_post_model.dart';
 
-import 'package:lively_nightlife_nightclub_party/features/role/user/chat_view/controller/user_chat_controller.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/chat_view/model/user_chat_model.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/chat_view/model/user_message_model.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_chat_view/controller/user_chat_controller.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_chat_view/model/user_chat_model.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_chat_view/model/user_message_model.dart';
 
 class HeatPostShareBottomSheet extends StatelessWidget {
   final ClubPostModel post;
@@ -95,11 +95,16 @@ class HeatPostShareBottomSheet extends StatelessWidget {
                   onTap: () {
                     Get.back();
                     final userName = users[index];
-                    
-                    final msgText = 'Check out this post: "${post.caption}" (posted ${post.time})';
+
+                    final msgText =
+                        'Check out this post: "${post.caption}" (posted ${post.time})';
                     if (Get.isRegistered<UserChatController>()) {
                       final chatController = Get.find<UserChatController>();
-                      final cIdx = chatController.chatsList.indexWhere((c) => c.name.toLowerCase().contains(userName.toLowerCase()));
+                      final cIdx = chatController.chatsList.indexWhere(
+                        (c) => c.name.toLowerCase().contains(
+                          userName.toLowerCase(),
+                        ),
+                      );
                       UserChatModel chat;
                       if (cIdx != -1) {
                         chat = chatController.chatsList[cIdx];
@@ -107,7 +112,8 @@ class HeatPostShareBottomSheet extends StatelessWidget {
                         chat = UserChatModel(
                           id: DateTime.now().millisecondsSinceEpoch.toString(),
                           name: userName,
-                          avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb',
+                          avatar:
+                              'https://images.unsplash.com/photo-1534528741775-53994a69daeb',
                           lastSeen: 'Active now',
                           isOnline: true,
                           time: 'Just now',
@@ -116,24 +122,31 @@ class HeatPostShareBottomSheet extends StatelessWidget {
                         );
                         chatController.chatsList.add(chat);
                       }
-                      
+
                       final newMessage = UserMessageModel(
                         id: DateTime.now().millisecondsSinceEpoch.toString(),
                         text: msgText,
                         isMe: true,
                         time: DateTime.now(),
                       );
-                      
-                      final updatedMessages = List<UserMessageModel>.from(chat.messages)..add(newMessage);
-                      final updatedChat = chat.copyWith(messages: updatedMessages, time: 'Just now');
-                      
-                      final targetIdx = chatController.chatsList.indexWhere((c) => c.name == chat.name);
+
+                      final updatedMessages = List<UserMessageModel>.from(
+                        chat.messages,
+                      )..add(newMessage);
+                      final updatedChat = chat.copyWith(
+                        messages: updatedMessages,
+                        time: 'Just now',
+                      );
+
+                      final targetIdx = chatController.chatsList.indexWhere(
+                        (c) => c.name == chat.name,
+                      );
                       if (targetIdx != -1) {
                         chatController.chatsList[targetIdx] = updatedChat;
                       }
                       chatController.filterChats();
                     }
-                    
+
                     Get.snackbar(
                       'Shared Inside App',
                       'Post shared with $userName successfully!',

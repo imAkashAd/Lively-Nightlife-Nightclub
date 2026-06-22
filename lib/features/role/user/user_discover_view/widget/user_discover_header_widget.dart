@@ -67,18 +67,21 @@ class UserDiscoverHeaderWidget extends StatelessWidget {
             ),
             SizedBox(width: 16.w),
             // Profile image
-            Container(
-              width: 38.w,
-              height: 38.h,
-              padding: EdgeInsets.all(2.w),
-              decoration: BoxDecoration(
-                color: AppColors.blueColor.withValues(alpha: 0.5),
-                shape: BoxShape.circle,
-              ),
-              child: CircleAvatar(
-                radius: 18.r,
-                backgroundImage: const NetworkImage(
-                  'https://i.pravatar.cc/150?img=10',
+            GestureDetector(
+              onTap: () => Get.toNamed(AppRoute.userProfileView),
+              child: Container(
+                width: 38.w,
+                height: 38.h,
+                padding: EdgeInsets.all(2.w),
+                decoration: BoxDecoration(
+                  color: AppColors.blueColor.withValues(alpha: 0.5),
+                  shape: BoxShape.circle,
+                ),
+                child: CircleAvatar(
+                  radius: 18.r,
+                  backgroundImage: const NetworkImage(
+                    'https://i.pravatar.cc/150?img=10',
+                  ),
                 ),
               ),
             ),

@@ -3,29 +3,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lively_nightlife_nightclub_party/core/common/widgets/text_property.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/colors.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/user_home_view/controller/user_home_controller.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/user_home_view/model/feed_post_model.dart';
+import '../controller/user_other_profile_controller.dart';
 
-import 'package:lively_nightlife_nightclub_party/features/role/user/user_chat_view/controller/user_chat_controller.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/user_chat_view/model/user_chat_model.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/user_chat_view/model/user_message_model.dart';
+class UserProfileShareBottomSheet extends StatelessWidget {
+  final UserOtherProfileController controller;
 
-class ShareBottomSheetWidget extends StatelessWidget {
-  final FeedPostModel post;
-
-  const ShareBottomSheetWidget({super.key, required this.post});
+  const UserProfileShareBottomSheet({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
-    final homeController = Get.find<UserHomeController>();
-
     final users = [
       {'name': 'Alex', 'color': const Color(0xFFC084FC)}, // Purple
       {'name': 'Emma', 'color': const Color(0xFFF472B6)}, // Pink
       {'name': 'Ryan', 'color': const Color(0xFF60A5FA)}, // Blue
       {'name': 'Sophia', 'color': const Color(0xFF34D399)}, // Green
       {'name': 'John', 'color': const Color(0xFFFBBF24)}, // Amber
-      {'name': 'Olive', 'color': const Color(0xFFF87171)}, // Red
+      {'name': 'Oliver', 'color': const Color(0xFFF87171)}, // Red
       {'name': 'Mia', 'color': const Color(0xFF2DD4BF)}, // Teal
     ];
 
@@ -58,7 +51,7 @@ class ShareBottomSheetWidget extends StatelessWidget {
 
           // Title
           TextProperty(
-            text: 'Share Post',
+            text: 'Share Profile',
             textColor: AppColors.blackColor,
             fontFamily: 'Sora',
             fontSize: 18.sp,
@@ -66,7 +59,7 @@ class ShareBottomSheetWidget extends StatelessWidget {
           ),
           SizedBox(height: 24.h),
 
-          // Two Quick Action Cards (Side by side)
+          // Action cards
           Row(
             children: [
               Expanded(
@@ -77,7 +70,7 @@ class ShareBottomSheetWidget extends StatelessWidget {
                   bgColor: AppColors.blueColor.withValues(alpha: 0.08),
                   onTap: () {
                     Get.back();
-                    homeController.shareExternally();
+                    controller.shareExternally();
                   },
                 ),
               ),
@@ -92,7 +85,7 @@ class ShareBottomSheetWidget extends StatelessWidget {
                     Get.back();
                     Get.snackbar(
                       'Copied',
-                      'Link copied successfully',
+                      'Profile link copied successfully',
                       backgroundColor: AppColors.blueColor,
                       colorText: AppColors.whiteColor,
                     );
@@ -103,7 +96,6 @@ class ShareBottomSheetWidget extends StatelessWidget {
           ),
           SizedBox(height: 28.h),
 
-          // Section Title
           Align(
             alignment: Alignment.centerLeft,
             child: TextProperty(
@@ -116,7 +108,6 @@ class ShareBottomSheetWidget extends StatelessWidget {
           ),
           SizedBox(height: 16.h),
 
-          // Horizontal Contacts List
           SizedBox(
             height: 90.h,
             child: ListView.builder(
@@ -124,72 +115,11 @@ class ShareBottomSheetWidget extends StatelessWidget {
               itemCount: users.length,
               itemBuilder: (context, index) {
                 final user = users[index];
-                final String userName = user['name'] as String;
+                final String name = user['name'] as String;
                 final Color avatarColor = user['color'] as Color;
 
                 return GestureDetector(
-                  onTap: () {
-                    Get.back();
-                    post.shareCount.value++;
-
-                    final msgText =
-                        'Check out this post by @${post.userName} at ${post.location}: "${post.caption}"';
-                    if (Get.isRegistered<UserChatController>()) {
-                      final chatController = Get.find<UserChatController>();
-                      final cIdx = chatController.chatsList.indexWhere(
-                        (c) => c.name.toLowerCase().contains(
-                          userName.toLowerCase(),
-                        ),
-                      );
-                      UserChatModel chat;
-                      if (cIdx != -1) {
-                        chat = chatController.chatsList[cIdx];
-                      } else {
-                        chat = UserChatModel(
-                          id: DateTime.now().millisecondsSinceEpoch.toString(),
-                          name: userName,
-                          avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb',
-                          lastSeen: 'Active now',
-                          isOnline: true,
-                          time: 'Just now',
-                          unreadCount: 0,
-                          messages: [],
-                        );
-                        chatController.chatsList.add(chat);
-                      }
-
-                      final newMessage = UserMessageModel(
-                        id: DateTime.now().millisecondsSinceEpoch.toString(),
-                        text: msgText,
-                        isMe: true,
-                        time: DateTime.now(),
-                      );
-
-                      final updatedMessages = List<UserMessageModel>.from(
-                        chat.messages,
-                      )..add(newMessage);
-                      final updatedChat = chat.copyWith(
-                        messages: updatedMessages,
-                        time: 'Just now',
-                      );
-
-                      final targetIdx = chatController.chatsList.indexWhere(
-                        (c) => c.name == chat.name,
-                      );
-                      if (targetIdx != -1) {
-                        chatController.chatsList[targetIdx] = updatedChat;
-                      }
-                      chatController.filterChats();
-                    }
-
-                    Get.snackbar(
-                      'Shared Inside App',
-                      'Post shared with $userName successfully!',
-                      snackPosition: SnackPosition.BOTTOM,
-                      backgroundColor: AppColors.blueColor,
-                      colorText: AppColors.whiteColor,
-                    );
-                  },
+                  onTap: () => controller.shareInApp(name),
                   child: Padding(
                     padding: EdgeInsets.only(right: 18.w),
                     child: Column(
@@ -198,7 +128,7 @@ class ShareBottomSheetWidget extends StatelessWidget {
                           radius: 26.r,
                           backgroundColor: avatarColor.withValues(alpha: 0.15),
                           child: TextProperty(
-                            text: userName[0],
+                            text: name[0],
                             textColor: avatarColor,
                             fontSize: 18.sp,
                             fontWeight: FontWeight.w700,
@@ -206,7 +136,7 @@ class ShareBottomSheetWidget extends StatelessWidget {
                         ),
                         SizedBox(height: 6.h),
                         TextProperty(
-                          text: userName,
+                          text: name,
                           textColor: AppColors.greyColor,
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w500,

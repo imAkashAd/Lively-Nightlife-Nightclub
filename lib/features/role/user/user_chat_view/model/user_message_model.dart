@@ -1,4 +1,4 @@
-import 'package:lively_nightlife_nightclub_party/features/role/user/discover_view/model/user_discover_club_model.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_discover_view/model/user_discover_club_model.dart';
 
 class UserMessageModel {
   final String id;

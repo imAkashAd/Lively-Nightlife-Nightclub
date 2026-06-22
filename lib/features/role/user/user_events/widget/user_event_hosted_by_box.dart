@@ -6,8 +6,8 @@ import 'package:lively_nightlife_nightclub_party/core/common/widgets/text_proper
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/colors.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/image_path.dart';
 import 'package:lively_nightlife_nightclub_party/routes/app_routes.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/discover_view/controller/user_discover_controller.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/discover_view/model/user_discover_club_model.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_discover_view/controller/user_discover_controller.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_discover_view/model/user_discover_club_model.dart';
 import '../model/user_event_model.dart';
 
 class UserEventHostedByBox extends StatelessWidget {

@@ -63,9 +63,7 @@ class HomeHeaderWidget extends StatelessWidget {
         SizedBox(width: 16.w),
 
         GestureDetector(
-          onTap: () {
-            // profile later
-          },
+          onTap: () => Get.toNamed(AppRoute.userProfileView),
           child: Container(
             width: 38.w,
             height: 38.h,

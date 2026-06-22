@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/image_path.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/discover_view/controller/user_discover_controller.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/discover_view/widget/user_discover_club_card_widget.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/discover_view/widget/user_discover_header_widget.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/discover_view/widget/user_discover_tab_bar_widget.dart';
-import 'package:lively_nightlife_nightclub_party/features/role/user/discover_view/widget/user_discover_trending_card_widget.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_discover_view/controller/user_discover_controller.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_discover_view/widget/user_discover_club_card_widget.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_discover_view/widget/user_discover_header_widget.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_discover_view/widget/user_discover_tab_bar_widget.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_discover_view/widget/user_discover_trending_card_widget.dart';
 
-class UserDiscoverView extends GetView<UserDiscoverController> {
+class UserDiscoverView extends StatelessWidget {
   const UserDiscoverView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(UserDiscoverController());
     return Scaffold(
       body: Stack(
         children: [
