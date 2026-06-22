@@ -90,6 +90,13 @@ class CustomButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              if (icon != null)
+                Icon(
+                  icon,
+                  size: iconSize ?? 18.sp,
+                  color: iconColor ?? Colors.white,
+                ),
+              if (icon != null) SizedBox(width: 8.h),
               if (iconImagePath != null)
                 SvgPicture.asset(
                   iconImagePath!,

@@ -10,8 +10,7 @@ class AppColors {
   static const Color blackColor = Color(0xFF1A1C1E);
   static const Color secondBlackColor = Color(0xFF364153);
 
-
-  //text colors 
+  //text colors
   static const Color primaryTextColor = Color(0xFF1A1C1E);
   static const Color whiteColor = Color(0xFFFFFFFF);
   static const Color greyColor = Color(0xFF6C7278);
@@ -19,8 +18,9 @@ class AppColors {
   static const Color lightGreyColor = Color(0xFFA1A1AA);
   static const Color grey700Color = Color(0xFF364153);
   static const Color grey100Color = Color(0xFFF5F5F5);
-  static const Color redColor = Color(0xFFFB2C36);
-
+  static const Color lightGreyColor2 = Color(0xFFFAFAFA);
+  static const Color redColor = Color(0xFFEF4444);
+  static const Color purpleColor = Color(0xFF8B5CF6);
 
   //heatmap colors
   static const Color insaneColor = Color(0xFFEC4899);
@@ -28,4 +28,11 @@ class AppColors {
   static const Color activeColor = Color(0xFF8B5CF6);
   static const Color mildColor = Color(0xFF22C55E);
 
+  //gradient colors
+  static const Color gradientStartColor = Color(0xFFF943EC);
+  static const Color gradientMiddleColor = Color(0xFF4074FA);
+  static const Color gradientEndColor = Color(0xFF00E9F7);
+
+  //SliderColors
+  static const Color amberColor = Color(0xFFFE9A00);
 }

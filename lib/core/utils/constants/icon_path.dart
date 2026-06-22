@@ -5,7 +5,6 @@ class IconPath {
   static const String dropdown = 'assets/icons/dropdown.png';
   static const String lockIcon = 'assets/icons/lockicon.png';
 
-
   //svg icons
   static const String backButton = 'assets/icons/backButton.svg';
   static const String rightArrowIcon = 'assets/icons/rightArrowIcon.svg';
@@ -24,15 +23,30 @@ class IconPath {
   static const String shareIcon = 'assets/icons/shareIcon.svg';
   static const String saveIcon = 'assets/icons/saveIcon.svg';
   static const String threeDotIcon = 'assets/icons/threedotIcon.svg';
-  static const String notificationBellIcon = 'assets/icons/bellicon.svg';  
-  static const String flameIcon = 'assets/icons/flameIconforHeatmap.svg';  
-  static const String filterIcon = 'assets/icons/filterIcon.svg';  
-  static const String userAvatar = 'assets/icons/userAvatar.svg';  
-  static const String notifyLikeIcon = 'assets/icons/notifyLike.svg';  
-  static const String notifyFollowIcon = 'assets/icons/notifyFollow.svg';  
-  static const String notifyCommentIcon = 'assets/icons/notifyComment.svg';  
-  static const String notifyCalendarIcon = 'assets/icons/notifyCal.svg';  
-  static const String notifyEventIcon = 'assets/icons/notifyEvent.svg';  
-  static const String notifyTicketConfirmIcon = 'assets/icons/notifyTicketConfirm.svg';  
-  static const String notifyCheckIcon = 'assets/icons/notifyCheckIn.svg';  
+  static const String notificationBellIcon = 'assets/icons/bellicon.svg';
+  static const String flameIcon = 'assets/icons/flameIconforHeatmap.svg';
+  static const String filterIcon = 'assets/icons/filterIcon.svg';
+  static const String userAvatar = 'assets/icons/userAvatar.svg';
+  static const String notifyLikeIcon = 'assets/icons/notifyLike.svg';
+  static const String notifyFollowIcon = 'assets/icons/notifyFollow.svg';
+  static const String notifyCommentIcon = 'assets/icons/notifyComment.svg';
+  static const String notifyCalendarIcon = 'assets/icons/notifyCal.svg';
+  static const String notifyEventIcon = 'assets/icons/notifyEvent.svg';
+  static const String notifyTicketConfirmIcon =
+      'assets/icons/notifyTicketConfirm.svg';
+  static const String notifyCheckIcon = 'assets/icons/notifyCheckIn.svg';
+
+  static const String eventTimeIcon = 'assets/icons/eventTime.svg';
+  static const String eventLocationIcon = 'assets/icons/eventLocation.svg';
+  static const String clubContactNumIcon = 'assets/icons/clubContactNum.svg';
+  static const String clubWebsiteIcon = 'assets/icons/clubWebsite.svg';
+  static const String clubHeatScoreIcon = 'assets/icons/clubHeatScoreFlame.svg';
+  static const String rateStarIcon = 'assets/icons/rateStar.svg';
+  static const String searchIcon = 'assets/icons/searchIcon.svg';
+  static const String addIcon = 'assets/icons/addIcon.svg';
+  // static const String sendIcon = 'assets/icons/sendIcon.svg';
+  static const String cameraIcon = 'assets/icons/cameraIcon.svg';
+  static const String sendIcon = 'assets/icons/send.svg';
+  static const String musicIcon = 'assets/icons/musicIcon.svg';
+  static const String personIcon = 'assets/icons/personIcon.svg';
 }

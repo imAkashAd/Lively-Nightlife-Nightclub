@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lively_nightlife_nightclub_party/features/bottom_navigation_bar/controllers/user_bottom_navigation_bar_controller.dart';
 import 'package:lively_nightlife_nightclub_party/features/bottom_navigation_bar/widgets/custom_user_bottom_navbar.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/discover_view/view/user_discover_view.dart';
 import 'package:lively_nightlife_nightclub_party/features/role/user/home_view/view/user_home_view.dart';
-
+import 'package:lively_nightlife_nightclub_party/features/role/user/chat_view/view/user_chat_inbox_view.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/events/view/user_event_list_view.dart';
 
 class UserBottomNavigationView extends StatelessWidget {
   UserBottomNavigationView({super.key});
@@ -13,10 +15,10 @@ class UserBottomNavigationView extends StatelessWidget {
 
   final pages = [
     UserHomeView(),
-    const Center(child: Text('Discover')),
+    const UserDiscoverView(),
     const Center(child: Text('Location')),
-    const Center(child: Text('Events')),
-    const Center(child: Text('Messages')),
+    const UserEventListView(),
+    const UserChatInboxView(),
   ];
 
   @override
@@ -27,8 +29,9 @@ class UserBottomNavigationView extends StatelessWidget {
             controller.selectedIndex.value],
       ),
 
-      bottomNavigationBar:
-          const CustomUserBottomNavbar(),
+      bottomNavigationBar: Obx(() => controller.selectedIndex.value == 4
+          ? const SizedBox.shrink()
+          : const CustomUserBottomNavbar()),
     );
   }
 }

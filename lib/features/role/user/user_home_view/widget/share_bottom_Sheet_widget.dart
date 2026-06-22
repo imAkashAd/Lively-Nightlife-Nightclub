@@ -6,6 +6,10 @@ import 'package:lively_nightlife_nightclub_party/core/utils/constants/colors.dar
 import 'package:lively_nightlife_nightclub_party/features/role/user/home_view/controller/user_home_controller.dart';
 import 'package:lively_nightlife_nightclub_party/features/role/user/home_view/model/feed_post_model.dart';
 
+import 'package:lively_nightlife_nightclub_party/features/role/user/chat_view/controller/user_chat_controller.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/chat_view/model/user_chat_model.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/chat_view/model/user_message_model.dart';
+
 class ShareBottomSheetWidget extends StatelessWidget {
   final FeedPostModel post;
 
@@ -86,8 +90,54 @@ class ShareBottomSheetWidget extends StatelessWidget {
               itemBuilder: (_, index) {
                 return ListTile(
                   onTap: () {
-                    controller.shareInApp(
-                      users[index],
+                    Get.back();
+                    final userName = users[index];
+                    post.shareCount.value++;
+                    
+                    final msgText = 'Check out this post by @${post.userName} at ${post.location}: "${post.caption}"';
+                    if (Get.isRegistered<UserChatController>()) {
+                      final chatController = Get.find<UserChatController>();
+                      final cIdx = chatController.chatsList.indexWhere((c) => c.name.toLowerCase().contains(userName.toLowerCase()));
+                      UserChatModel chat;
+                      if (cIdx != -1) {
+                        chat = chatController.chatsList[cIdx];
+                      } else {
+                        chat = UserChatModel(
+                          id: DateTime.now().millisecondsSinceEpoch.toString(),
+                          name: userName,
+                          avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb',
+                          lastSeen: 'Active now',
+                          isOnline: true,
+                          time: 'Just now',
+                          unreadCount: 0,
+                          messages: [],
+                        );
+                        chatController.chatsList.add(chat);
+                      }
+                      
+                      final newMessage = UserMessageModel(
+                        id: DateTime.now().millisecondsSinceEpoch.toString(),
+                        text: msgText,
+                        isMe: true,
+                        time: DateTime.now(),
+                      );
+                      
+                      final updatedMessages = List<UserMessageModel>.from(chat.messages)..add(newMessage);
+                      final updatedChat = chat.copyWith(messages: updatedMessages, time: 'Just now');
+                      
+                      final targetIdx = chatController.chatsList.indexWhere((c) => c.name == chat.name);
+                      if (targetIdx != -1) {
+                        chatController.chatsList[targetIdx] = updatedChat;
+                      }
+                      chatController.filterChats();
+                    }
+                    
+                    Get.snackbar(
+                      'Shared Inside App',
+                      'Post shared with $userName successfully!',
+                      snackPosition: SnackPosition.BOTTOM,
+                      backgroundColor: AppColors.blueColor,
+                      colorText: AppColors.whiteColor,
                     );
                   },
                   leading: CircleAvatar(

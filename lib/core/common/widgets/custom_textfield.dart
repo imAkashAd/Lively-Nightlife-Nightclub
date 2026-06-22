@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/colors.dart';
 
@@ -71,11 +72,11 @@ class CustomTextfield extends StatelessWidget {
           prefixIcon: prefixIcon != null
               ? Padding(
                   padding: EdgeInsets.only(left: 12.w, right: 8.w),
-                  child: Image.asset(
+                  child: SvgPicture.asset(
                     prefixIcon!,
                     height: 18.h,
                     width: 18.w,
-                    fit: BoxFit.contain,
+                    // fit: BoxFit.contain,
                   ),
                 )
               : null,

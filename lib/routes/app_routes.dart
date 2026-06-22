@@ -30,6 +30,13 @@ import 'package:lively_nightlife_nightclub_party/features/role/user/notification
 import 'package:lively_nightlife_nightclub_party/features/role/user/notification/view/user_notification_view.dart';
 import 'package:lively_nightlife_nightclub_party/features/splash_view/bindings/splash_bindings.dart';
 import 'package:lively_nightlife_nightclub_party/features/splash_view/view/splash_view.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/discover_view/bindings/user_discover_binding.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/club_details/bindings/user_club_details_binding.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/club_details/view/user_club_details_view.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/chat_view/bindings/user_chat_binding.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/chat_view/view/user_chat_screen_view.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/events/bindings/user_event_binding.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/events/view/user_event_details_view.dart';
 
 class AppRoute {
   static const String splashView = '/splashView';
@@ -49,6 +56,9 @@ class AppRoute {
   static const String vibeSelectionView = '/vibeSelectionView';
   static const String userNotificationView = '/userNotificationView';
   static const String userNotificationReadView = '/userNotificationReadView';
+  static const String userClubDetailsView = '/userClubDetailsView';
+  static const String userChatScreenView = '/userChatScreenView';
+  static const String userEventDetailsView = '/userEventDetailsView';
 
   static String getSplashView() => splashView;
   static String getOnboardingView() => onboardingView;
@@ -66,6 +76,9 @@ class AppRoute {
   static String getVibeSelectionView() => vibeSelectionView;
   static String getUserNotificationView() => userNotificationView;
   static String getUserNotificationReadView() => userNotificationReadView;
+  static String getUserClubDetailsView() => userClubDetailsView;
+  static String getUserChatScreenView() => userChatScreenView;
+  static String getUserEventDetailsView() => userEventDetailsView;
 
   static List<GetPage> routes = [
     GetPage(
@@ -97,7 +110,7 @@ class AppRoute {
     GetPage(
       name: userBottomNavigationBarView,
       page: () => UserBottomNavigationView(),
-      bindings: [UserBottomNavbarBindings(), UserHomeBindings(), HeatMapBinding()],
+      bindings: [UserBottomNavbarBindings(), UserHomeBindings(), HeatMapBinding(), UserDiscoverBinding()],
     ),
 
     GetPage(
@@ -142,6 +155,21 @@ class AppRoute {
       name: userNotificationReadView,
       page: () => const UserNotificationReadView(),
       // binding: UserNotificationBinding(),
+    ),
+    GetPage(
+      name: userClubDetailsView,
+      page: () => const UserClubDetailsView(),
+      binding: UserClubDetailsBinding(),
+    ),
+    GetPage(
+      name: userChatScreenView,
+      page: () => const UserChatScreenView(),
+      binding: UserChatBinding(),
+    ),
+    GetPage(
+      name: userEventDetailsView,
+      page: () => const UserEventDetailsView(),
+      binding: UserEventBinding(),
     ),
   ];
 }
