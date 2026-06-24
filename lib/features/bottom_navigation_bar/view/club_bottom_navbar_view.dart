@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lively_nightlife_nightclub_party/features/bottom_navigation_bar/controllers/club_bottom_navbar_controller.dart';
 import 'package:lively_nightlife_nightclub_party/features/bottom_navigation_bar/widgets/custom_club_bottom_navbar.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/club/club_home/view/club_home_view.dart';
 
 class ClubBottomNavbarView extends StatelessWidget {
   ClubBottomNavbarView({super.key});
@@ -9,7 +10,7 @@ class ClubBottomNavbarView extends StatelessWidget {
   final controller = Get.find<ClubBottomNavbarController>();
 
   final pages = const [
-    Center(child: Text('Home')),
+    ClubHomeView(),
     Center(child: Text('Events')),
     Center(child: Text('Messages')),
   ];

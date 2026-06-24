@@ -44,9 +44,9 @@ class IconPath {
   static const String rateStarIcon = 'assets/icons/rateStar.svg';
   static const String searchIcon = 'assets/icons/searchIcon.svg';
   static const String addIcon = 'assets/icons/addIcon.svg';
-  // static const String sendIcon = 'assets/icons/sendIcon.svg';
   static const String cameraIcon = 'assets/icons/cameraIcon.svg';
   static const String sendIcon = 'assets/icons/send.svg';
   static const String musicIcon = 'assets/icons/musicIcon.svg';
   static const String personIcon = 'assets/icons/personIcon.svg';
+  static const String dollarIcon = 'assets/icons/dollarIcon.svg';
 }

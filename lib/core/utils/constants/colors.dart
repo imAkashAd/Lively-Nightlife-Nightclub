@@ -19,7 +19,7 @@ class AppColors {
   static const Color grey700Color = Color(0xFF364153);
   static const Color grey100Color = Color(0xFFF5F5F5);
   static const Color lightGreyColor2 = Color(0xFFFAFAFA);
-  static const Color redColor = Color(0xFFEF4444);
+  static const Color redColor = Color(0xFFE7000B);
   static const Color purpleColor = Color(0xFF8B5CF6);
 
   //heatmap colors
@@ -27,6 +27,7 @@ class AppColors {
   static const Color hotColor = Color(0xFFF59E0B);
   static const Color activeColor = Color(0xFF8B5CF6);
   static const Color mildColor = Color(0xFF22C55E);
+  static const Color greenColor = Color(0xFF00C950);
 
   //gradient colors
   static const Color gradientStartColor = Color(0xFFF943EC);

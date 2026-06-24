@@ -24,63 +24,141 @@ class OtpView extends StatelessWidget {
           children: [
             TextProperty(
               text: 'Check Your Email',
-              textColor: AppColors.whiteColor,
-              fontSize: 24.sp,
+              textColor: AppColors.blackColor,
+              fontSize: 32.sp,
               fontWeight: FontWeight.w600,
               textAlign: TextAlign.start,
             ),
             SizedBox(height: 8.h),
             TextProperty(
               text:
-                  'We sent a verification code to \nuser@company.com. Enter the code below.',
-              textColor: AppColors.blackColor,
-              fontSize: 16.sp,
+                  'We sent a verification code to user@company.com. Enter the code below.',
+              textColor: AppColors.greyColor,
+              fontSize: 12.sp,
               fontWeight: FontWeight.w400,
             ),
             SizedBox(height: 46.h),
             Center(
-              child: OtpTextField(
-                cursorColor: AppColors.whiteColor,
-                numberOfFields: 4,
-                enabledBorderColor: AppColors.blackColor,
-                borderColor: AppColors.blackColor,
-                focusedBorderColor: AppColors.primaryColor,
-                borderRadius: BorderRadius.circular(16.r),
-                fieldHeight: 56.h,
-                fieldWidth: 56.w,
-                showFieldAsBox: true,
-                filled: true,
-                fillColor: Colors.transparent,
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                textStyle: TextStyle(
-                  fontFamily: 'Inter',
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.whiteColor,
-                  height: 1.h,
-                ),
-                contentPadding: EdgeInsets.symmetric(vertical: 12.h),
-                onCodeChanged: (String code) {
-                  final flowController =
-                      Get.find<ResetPasswordFlowController>();
-                  flowController.otpCode = code.trim();
-                },
-                onSubmit: (String value) {
-                  final flowController =
-                      Get.find<ResetPasswordFlowController>();
-                  flowController.otpCode = value.trim();
-                },
-              ),
+              child: Obx(() {
+                final flowController = Get.find<ResetPasswordFlowController>();
+                return OtpTextField(
+                  borderWidth: 1.5.w,
+                  cursorColor: AppColors.primaryColor,
+                  showCursor: false,
+                  numberOfFields: 4,
+                  fieldWidth: 60.w,
+                  fieldHeight: 60.h,
+                  borderRadius: BorderRadius.circular(12.r),
+                  enabledBorderColor: flowController.hasError.value
+                      ? AppColors.redColor
+                      : AppColors.defaultBorderColor,
+                  focusedBorderColor: flowController.hasError.value
+                      ? AppColors.redColor
+                      : AppColors.primaryColor,
+                  borderColor: flowController.hasError.value
+                      ? AppColors.redColor
+                      : AppColors.defaultBorderColor,
+                  fillColor: flowController.hasError.value
+                      ? AppColors.redColor.withOpacity(0.05)
+                      : Colors.transparent,
+                  filled: true,
+                  showFieldAsBox: true,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  textStyle: TextStyle(
+                    color: flowController.hasError.value
+                        ? AppColors.redColor
+                        : AppColors.blackColor,
+                    fontFamily: 'Poppins',
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  contentPadding: EdgeInsets.symmetric(vertical: 12.h),
+                  onCodeChanged: (String code) {
+                    flowController.otpCode = code.trim();
+                    flowController.hasError.value = false;
+                    flowController.errorMessage.value = '';
+                  },
+                  onSubmit: (String value) {
+                    flowController.otpCode = value.trim();
+                    flowController.hasError.value = false;
+                    flowController.errorMessage.value = '';
+                  },
+                );
+              }),
+            ),
+            SizedBox(height: 16.h),
+            Center(
+              child: Obx(() {
+                final flowController = Get.find<ResetPasswordFlowController>();
+                if (flowController.seconds.value > 0) {
+                  return RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'Resend code in ',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            color: AppColors.blackColor,
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        TextSpan(
+                          text: '${flowController.seconds.value}s',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            color: AppColors.blackColor,
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                } else {
+                  return RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'Didn\'t receive the code?   ',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            color: AppColors.blackColor,
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        TextSpan(
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = flowController.resendOtp,
+                          text: 'Resend',
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            color: AppColors.blackColor,
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+              }),
             ),
             SizedBox(height: 46.h),
             Obx(() {
               final flowController = Get.find<ResetPasswordFlowController>();
               return CustomButton(
+                color: flowController.hasError.value
+                    ? AppColors.redColor
+                    : AppColors.primaryColor,
                 borderColor: Colors.transparent,
                 text: flowController.isLoading.value
                     ? 'Verifying...'
-                    : 'Verify Code',
+                    : (flowController.hasError.value
+                          ? 'Try again?'
+                          : 'Verify Code'),
                 icon: Icons.arrow_forward,
                 iconSize: 20.w,
                 onTap: flowController.isLoading.value
@@ -88,35 +166,49 @@ class OtpView extends StatelessWidget {
                     : () => flowController.nextPage(),
               );
             }),
-            SizedBox(height: 16.h),
-            Center(
-              child: RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'Didn\'t receive the code?',
-                      style: TextStyle(
-                        fontFamily: 'Inter',
-                        color: AppColors.blackColor,
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w400,
+
+            Obx(() {
+              final flowController = Get.find<ResetPasswordFlowController>();
+              if (flowController.hasError.value &&
+                  flowController.errorMessage.value.isNotEmpty) {
+                return Padding(
+                  padding: EdgeInsets.only(top: 16.h),
+                  child: Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.w,
+                      vertical: 12.h,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColors.redColor.withValues(alpha: 0.05),
+                      borderRadius: BorderRadius.circular(100.r),
+                      border: Border.all(
+                        color: AppColors.redColor.withOpacity(0.15),
+                        width: 1.w,
                       ),
                     ),
-                    TextSpan(text: ' '),
-                    TextSpan(
-                      text: 'Resend',
-                      recognizer: TapGestureRecognizer()..onTap = () {},
-                      style: TextStyle(
-                        fontFamily: 'Inter',
-                        color: AppColors.primaryColor,
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.error_outline,
+                          color: AppColors.redColor,
+                          size: 18.sp,
+                        ),
+                        SizedBox(width: 8.w),
+                        TextProperty(
+                          text: flowController.errorMessage.value,
+                          textColor: AppColors.redColor,
+                          fontSize: 13.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            ),
+                  ),
+                );
+              }
+              return const SizedBox.shrink();
+            }),
           ],
         ),
       ),

@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lively_nightlife_nightclub_party/routes/app_routes.dart';
 
 class ResetPasswordFlowController extends GetxController {
   final PageController pageController = PageController();
@@ -8,11 +10,34 @@ class ResetPasswordFlowController extends GetxController {
   String otpCode = '';
   String? resetToken;
   final RxBool isLoading = false.obs;
+  final RxBool hasError = false.obs;
+  final RxString errorMessage = ''.obs;
+  Timer? timer;
+  final RxInt seconds = 0.obs;
+
+  void startTimer() {
+    seconds.value = 45;
+    timer?.cancel();
+    timer = Timer.periodic(const Duration(seconds: 1), (t) {
+      if (seconds.value <= 0) {
+        t.cancel();
+      } else {
+        seconds.value--;
+      }
+    });
+  }
+
+  void resendOtp() {
+    startTimer();
+    Get.snackbar('OTP Sent', 'Verification code sent again.');
+  }
 
   static const int totalSteps = 3;
 
   void onPageChanged(int index) {
     currentStep.value = index;
+    hasError.value = false;
+    errorMessage.value = '';
   }
 
   Future<void> nextPage() async {
@@ -22,6 +47,7 @@ class ResetPasswordFlowController extends GetxController {
       try {
         isLoading.value = true;
         // await ApiService.getOpt(body: {'email': email});
+        startTimer();
         await pageController.nextPage(
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeOut,
@@ -32,7 +58,57 @@ class ResetPasswordFlowController extends GetxController {
         isLoading.value = false;
       }
       return;
-    }}
+    }
+
+    if (currentStep.value == 1) {
+      // Verify OTP
+      if (otpCode.length != 4) {
+        hasError.value = true;
+        errorMessage.value = 'Please enter the 4 digit code.';
+        return;
+      }
+
+      try {
+        isLoading.value = true;
+        hasError.value = false;
+        errorMessage.value = '';
+
+        await Future.delayed(const Duration(seconds: 1));
+
+        isLoading.value = false;
+
+        if (otpCode != '1234') {
+          hasError.value = true;
+          errorMessage.value = 'Oh no! incorrect code.';
+          return;
+        }
+
+        await pageController.nextPage(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      } catch (e) {
+        Get.snackbar('Error', e.toString());
+      } finally {
+        isLoading.value = false;
+      }
+      return;
+    }
+
+    if (currentStep.value == 2) {
+      // Reset password
+      try {
+        isLoading.value = true;
+        Get.snackbar('Success', 'Password reset successful. Please login.');
+        Get.offAllNamed(AppRoute.loginView);
+      } catch (e) {
+        Get.snackbar('Error', e.toString());
+      } finally {
+        isLoading.value = false;
+      }
+      return;
+    }
+  }
 
   //   if (currentStep.value == 1) {
   //     // Verify OTP
@@ -128,6 +204,7 @@ class ResetPasswordFlowController extends GetxController {
   @override
   void onClose() {
     pageController.dispose();
+    timer?.cancel();
     super.onClose();
   }
 }

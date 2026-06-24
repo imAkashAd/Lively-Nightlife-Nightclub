@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/colors.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/icon_path.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/image_path.dart';
 import 'package:lively_nightlife_nightclub_party/features/auth_view/controller/reset_password_flow_controller.dart';
+import 'package:lively_nightlife_nightclub_party/features/auth_view/view/forget_pass_view.dart';
+import 'package:lively_nightlife_nightclub_party/features/auth_view/widgets/create_new_pass_step_page.dart';
+import 'package:lively_nightlife_nightclub_party/features/auth_view/widgets/otp_view.dart';
 import 'package:lively_nightlife_nightclub_party/features/auth_view/widgets/step_indicator.dart';
 
 class PasswordResetFlowView extends StatelessWidget {
@@ -41,7 +45,7 @@ class PasswordResetFlowView extends StatelessWidget {
                             controller.previousPage();
                           }
                         },
-                        child: Image.asset(
+                        child: SvgPicture.asset(
                           IconPath.backButton,
                           width: 24.w,
                           height: 24.h,
@@ -61,11 +65,9 @@ class PasswordResetFlowView extends StatelessWidget {
                     onPageChanged: controller.onPageChanged,
                     physics: const NeverScrollableScrollPhysics(),
                     children: [
-                      // ForgetPassView(onNext: controller.nextPage),
-                      // OtpView(onNext: controller.nextPage),
-                      // CreateNewPassStepPage(
-                      //   onFinish: controller.nextPage,
-                      // ),
+                      ForgetPassView(onNext: controller.nextPage),
+                      OtpView(onNext: controller.nextPage),
+                      CreateNewPassStepPage(onFinish: controller.nextPage),
                     ],
                   ),
                 ),

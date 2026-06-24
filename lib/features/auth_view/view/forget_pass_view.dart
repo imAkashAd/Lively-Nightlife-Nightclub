@@ -6,29 +6,23 @@ import 'package:lively_nightlife_nightclub_party/core/common/widgets/custom_butt
 import 'package:lively_nightlife_nightclub_party/core/common/widgets/custom_textfield.dart';
 import 'package:lively_nightlife_nightclub_party/core/common/widgets/text_property.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/colors.dart';
-import 'package:lively_nightlife_nightclub_party/core/utils/constants/icon_path.dart';
-import 'package:lively_nightlife_nightclub_party/features/auth_view/controller/password_controller.dart';
+import 'package:lively_nightlife_nightclub_party/features/auth_view/controller/reset_password_flow_controller.dart';
 import 'package:lively_nightlife_nightclub_party/routes/app_routes.dart';
 
-class CreateNewPassStepPage extends StatelessWidget {
-  final VoidCallback onFinish;
+class ForgetPassView extends StatelessWidget {
+  final VoidCallback onNext;
 
-  const CreateNewPassStepPage({super.key, required this.onFinish});
+  const ForgetPassView({super.key, required this.onNext});
 
   @override
   Widget build(BuildContext context) {
-    final passwordController = Get.find<PasswordController>(
-      tag: 'createPassword',
-    );
-
     return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
       keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextProperty(
-            text: 'Set New Password',
+            text: 'Forget Password?',
             textColor: AppColors.blackColor,
             fontSize: 32.sp,
             fontWeight: FontWeight.w600,
@@ -36,78 +30,72 @@ class CreateNewPassStepPage extends StatelessWidget {
           SizedBox(height: 8.h),
           TextProperty(
             text:
-                'Your new password must be different from previously used passwords.',
+                'Don\'t worry! It happens. Please enter the email address associated with your account.',
             textColor: AppColors.greyColor,
             fontSize: 12.sp,
             fontWeight: FontWeight.w400,
           ),
-          SizedBox(height: 32.h),
+          SizedBox(height: 24.h),
+
           // Align(
           //   alignment: Alignment.centerLeft,
           //   child: TextProperty(
-          //     text: 'New Password',
-          //     textColor: AppColors.whiteColor,
+          //     text: "Email",
+          //     textColor: AppColors.blackColor,
           //     fontSize: 16.sp,
           //     fontWeight: FontWeight.w400,
           //   ),
           // ),
           // SizedBox(height: 8.h),
-          CustomTextfield(
-            // borderColor: AppColors.defaultBorderColor,
-            borderRadius: 12.r,
-            isPassword: true,
-            prefixIcon: IconPath.lockIcon,
-            fieldText: 'New password',
-            onChanged: passwordController.onPasswordChanged,
+          Builder(
+            builder: (context) {
+              final flowController = Get.find<ResetPasswordFlowController>();
+              return CustomTextfield(
+                borderColor: AppColors.whiteColor.withAlpha(25),
+                borderRadius: 12.r,
+                isPassword: false,
+                // prefixIcon: IconPath.mailIcon,
+                fieldText: 'Enter your email',
+                controller: flowController.emailController,
+              );
+            },
           ),
-          SizedBox(height: 32.h),
-          // Align(
-          //   alignment: Alignment.centerLeft,
-          //   child: TextProperty(
-          //     text: 'Confirm New Password',
-          //     textColor: AppColors.whiteColor,
-          //     fontSize: 16.sp,
-          //     fontWeight: FontWeight.w400,
-          //   ),
-          // ),
-          // SizedBox(height: 8.h),
-          CustomTextfield(
-            // borderColor: AppColors.defaultBorderColor,
-            borderRadius: 12.r,
-            isPassword: true,
-            prefixIcon: IconPath.lockIcon,
-            fieldText: 'Confirm new password',
-            onChanged: passwordController.onConfirmPasswordChanged,
-          ),
-          SizedBox(height: 32.h),
-          CustomButton(
-            isShadowNeed: false,
-            text: 'Reset Password',
-            // icon: Icons.arrow_forward,
-            iconSize: 20.w,
-            onTap: onFinish,
-          ),
+          SizedBox(height: 40.h),
+          Obx(() {
+            final flowController = Get.find<ResetPasswordFlowController>();
+            return CustomButton(
+              isShadowNeed: false,
+              // icon: Icons.arrow_forward,
+              iconSize: 20.w,
+              text: flowController.isLoading.value ? 'Sending...' : 'Send',
+              onTap: flowController.isLoading.value
+                  ? () {}
+                  : () => flowController.nextPage(),
+            );
+          }),
           SizedBox(height: 16.h),
           Center(
             child: RichText(
               text: TextSpan(
                 children: [
                   TextSpan(
-                    text: 'Remember your password?   ',
+                    text: "Remember your password?   ",
                     style: TextStyle(
                       fontFamily: 'Inter',
                       color: AppColors.blackColor,
-                      fontSize: 14.sp,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
                   TextSpan(
                     recognizer: TapGestureRecognizer()
-                      ..onTap = () => Get.toNamed(AppRoute.loginView),
-                    text: 'Sign in',
+                      ..onTap = () {
+                        Get.toNamed(AppRoute.loginView);
+                      },
+                    text: "Sign in",
                     style: TextStyle(
                       color: AppColors.primaryColor,
-                      fontSize: 14.sp,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
