@@ -42,6 +42,16 @@ import 'package:lively_nightlife_nightclub_party/features/role/user/user_profile
 import 'package:lively_nightlife_nightclub_party/features/role/user/user_profile/view/user_followers_view.dart';
 import 'package:lively_nightlife_nightclub_party/features/role/user/user_profile/view/user_following_view.dart';
 import 'package:lively_nightlife_nightclub_party/features/role/user/user_profile/view/user_other_profile_view.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/club/club_profile/bindings/club_profile_binding.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/club/club_profile/view/club_settings_view.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/club/club_profile/view/club_notifications_settings_view.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/club/club_profile/view/club_account_settings_view.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/club/club_profile/view/club_privacy_settings_view.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_profile_setting/bindings/user_profile_setting_binding.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_profile_setting/view/user_settings_view.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_profile_setting/view/user_notifications_settings_view.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_profile_setting/view/user_account_settings_view.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/user/user_profile_setting/view/user_privacy_settings_view.dart';
 
 class AppRoute {
   static const String splashView = '/splashView';
@@ -68,6 +78,14 @@ class AppRoute {
   static const String userFollowersView = '/userFollowersView';
   static const String userFollowingView = '/userFollowingView';
   static const String userOtherProfileView = '/userOtherProfileView';
+  static const String clubSettingsView = '/clubSettingsView';
+  static const String clubNotificationsSettingsView = '/clubNotificationsSettingsView';
+  static const String clubAccountSettingsView = '/clubAccountSettingsView';
+  static const String clubPrivacySettingsView = '/clubPrivacySettingsView';
+  static const String userSettingsView = '/userSettingsView';
+  static const String userNotificationsSettingsView = '/userNotificationsSettingsView';
+  static const String userAccountSettingsView = '/userAccountSettingsView';
+  static const String userPrivacySettingsView = '/userPrivacySettingsView';
 
   static String getSplashView() => splashView;
   static String getOnboardingView() => onboardingView;
@@ -92,6 +110,14 @@ class AppRoute {
   static String getUserFollowersView() => userFollowersView;
   static String getUserFollowingView() => userFollowingView;
   static String getUserOtherProfileView() => userOtherProfileView;
+  static String getClubSettingsView() => clubSettingsView;
+  static String getClubNotificationsSettingsView() => clubNotificationsSettingsView;
+  static String getClubAccountSettingsView() => clubAccountSettingsView;
+  static String getClubPrivacySettingsView() => clubPrivacySettingsView;
+  static String getUserSettingsView() => userSettingsView;
+  static String getUserNotificationsSettingsView() => userNotificationsSettingsView;
+  static String getUserAccountSettingsView() => userAccountSettingsView;
+  static String getUserPrivacySettingsView() => userPrivacySettingsView;
 
   static List<GetPage> routes = [
     GetPage(
@@ -208,6 +234,46 @@ class AppRoute {
       name: userOtherProfileView,
       page: () => const UserOtherProfileView(),
       binding: UserProfileBinding(),
+    ),
+    GetPage(
+      name: clubSettingsView,
+      page: () => const ClubSettingsView(),
+      binding: ClubProfileBinding(),
+    ),
+    GetPage(
+      name: clubNotificationsSettingsView,
+      page: () => const ClubNotificationsSettingsView(),
+      binding: ClubProfileBinding(),
+    ),
+    GetPage(
+      name: clubAccountSettingsView,
+      page: () => const ClubAccountSettingsView(),
+      binding: ClubProfileBinding(),
+    ),
+    GetPage(
+      name: clubPrivacySettingsView,
+      page: () => const ClubPrivacySettingsView(),
+      binding: ClubProfileBinding(),
+    ),
+    GetPage(
+      name: userSettingsView,
+      page: () => const UserSettingsView(),
+      binding: UserProfileSettingBinding(),
+    ),
+    GetPage(
+      name: userNotificationsSettingsView,
+      page: () => const UserNotificationsSettingsView(),
+      binding: UserProfileSettingBinding(),
+    ),
+    GetPage(
+      name: userAccountSettingsView,
+      page: () => const UserAccountSettingsView(),
+      binding: UserProfileSettingBinding(),
+    ),
+    GetPage(
+      name: userPrivacySettingsView,
+      page: () => const UserPrivacySettingsView(),
+      binding: UserProfileSettingBinding(),
     ),
   ];
 }

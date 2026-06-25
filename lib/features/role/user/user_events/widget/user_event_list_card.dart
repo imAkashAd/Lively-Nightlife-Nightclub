@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lively_nightlife_nightclub_party/core/common/widgets/text_property.dart';
@@ -16,6 +17,40 @@ class UserEventListCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Widget imageWidget;
+    final fallback = Container(
+      width: 80.w,
+      height: 100.h,
+      color: AppColors.grey50Color,
+      child: const Icon(Icons.broken_image, color: AppColors.greyColor),
+    );
+
+    if (event.image.startsWith('http')) {
+      imageWidget = Image.network(
+        event.image,
+        width: 80.w,
+        height: 100.h,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) => fallback,
+      );
+    } else if (event.image.startsWith('assets/')) {
+      imageWidget = Image.asset(
+        event.image,
+        width: 80.w,
+        height: 100.h,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) => fallback,
+      );
+    } else {
+      imageWidget = Image.file(
+        File(event.image),
+        width: 80.w,
+        height: 100.h,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) => fallback,
+      );
+    }
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -37,18 +72,7 @@ class UserEventListCard extends StatelessWidget {
             // Left: Event Image (vertical layout, rounded corners)
             ClipRRect(
               borderRadius: BorderRadius.circular(14.r),
-              child: Image.network(
-                event.image,
-                width: 80.w,
-                height: 100.h,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) => Container(
-                  width: 80.w,
-                  height: 100.h,
-                  color: AppColors.grey50Color,
-                  child: const Icon(Icons.broken_image, color: AppColors.greyColor),
-                ),
-              ),
+              child: imageWidget,
             ),
             SizedBox(width: 14.w),
             

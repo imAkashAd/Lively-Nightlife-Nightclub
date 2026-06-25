@@ -49,4 +49,11 @@ class IconPath {
   static const String musicIcon = 'assets/icons/musicIcon.svg';
   static const String personIcon = 'assets/icons/personIcon.svg';
   static const String dollarIcon = 'assets/icons/dollarIcon.svg';
+  static const String tagIcon = 'assets/icons/tagIcon.svg';
+  static const String insaneLocationIcon = 'assets/icons/insaneLocation.svg';
+  static const String purpleTagIcon = 'assets/icons/purpleTagIcon.svg';
+  static const String globalIcon = 'assets/icons/global.svg';
+  static const String lock = 'assets/icons/lock.svg';
+  static const String purplePerson = 'assets/icons/purplePerson.svg';
+  static const String tickIcon = 'assets/icons/tickIcon.svg';
 }

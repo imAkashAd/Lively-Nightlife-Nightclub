@@ -9,6 +9,7 @@ class UserChatModel {
   final String time;
   final int unreadCount;
   final List<UserMessageModel> messages;
+  final bool isClub;
 
   const UserChatModel({
     required this.id,
@@ -19,6 +20,7 @@ class UserChatModel {
     required this.time,
     required this.unreadCount,
     required this.messages,
+    this.isClub = false,
   });
 
   UserChatModel copyWith({
@@ -30,6 +32,7 @@ class UserChatModel {
     String? time,
     int? unreadCount,
     List<UserMessageModel>? messages,
+    bool? isClub,
   }) {
     return UserChatModel(
       id: id ?? this.id,
@@ -40,6 +43,7 @@ class UserChatModel {
       time: time ?? this.time,
       unreadCount: unreadCount ?? this.unreadCount,
       messages: messages ?? this.messages,
+      isClub: isClub ?? this.isClub,
     );
   }
 }

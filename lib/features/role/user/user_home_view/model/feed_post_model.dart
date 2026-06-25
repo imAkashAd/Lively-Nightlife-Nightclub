@@ -10,6 +10,7 @@ class FeedPostModel {
   final String image;
   final String caption;
   final String hashtags;
+  final List<String>? images;
 
   RxBool isLiked;
   RxBool isSaved;
@@ -38,6 +39,7 @@ class FeedPostModel {
     required int commentCount,
     required int shareCount,
     required List<CommentModel> comments,
+    this.images,
   })  : isLiked = isLiked.obs,
         isSaved = isSaved.obs,
         isFollowing = isFollowing.obs,

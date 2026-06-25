@@ -7,6 +7,7 @@ import 'package:lively_nightlife_nightclub_party/core/utils/constants/colors.dar
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/icon_path.dart';
 import 'package:lively_nightlife_nightclub_party/features/role/club/club_home/controller/club_home_controller.dart';
 import 'package:lively_nightlife_nightclub_party/features/role/club/club_home/widget/club_event_card.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/club/club_home/view/club_create_event_view.dart';
 
 class ClubEventsTab extends StatelessWidget {
   const ClubEventsTab({super.key});
@@ -25,7 +26,7 @@ class ClubEventsTab extends StatelessWidget {
           text: 'Create New Event',
           color: AppColors.primaryColor,
           borderRadius: BorderRadius.circular(100.r),
-          onTap: () {},
+          onTap: () => Get.to(() => const ClubCreateEventView()),
         ),
         SizedBox(height: 24.h),
         // Section Header

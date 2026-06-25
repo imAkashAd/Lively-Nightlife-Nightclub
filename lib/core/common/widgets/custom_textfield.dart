@@ -16,6 +16,7 @@ class CustomTextfield extends StatelessWidget {
   final int maxLines;
   final Color? hintTextColor;
   final double? borderRadius;
+  final TextInputType? keyboardType;
 
   const CustomTextfield({
     super.key,
@@ -30,6 +31,7 @@ class CustomTextfield extends StatelessWidget {
     this.maxLines = 1,
     this.hintTextColor,
     this.borderRadius,
+    this.keyboardType,
   });
 
   @override
@@ -38,6 +40,7 @@ class CustomTextfield extends StatelessWidget {
 
     return Obx(() {
       return TextField(
+        keyboardType: keyboardType,
         maxLines: maxLines,
         controller: controller,
         onChanged: onChanged,

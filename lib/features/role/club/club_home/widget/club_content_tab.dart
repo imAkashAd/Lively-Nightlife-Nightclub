@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -10,6 +11,7 @@ import 'package:lively_nightlife_nightclub_party/core/utils/constants/icon_path.
 import 'package:lively_nightlife_nightclub_party/features/role/club/club_home/controller/club_home_controller.dart';
 import 'package:lively_nightlife_nightclub_party/features/role/club/club_home/widget/club_share_bottom_sheet.dart';
 import 'package:lively_nightlife_nightclub_party/features/role/user/user_home_view/model/feed_post_model.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/club/club_home/view/club_upload_content_view.dart';
 
 class ClubContentTab extends StatelessWidget {
   const ClubContentTab({super.key});
@@ -28,7 +30,7 @@ class ClubContentTab extends StatelessWidget {
           text: 'Upload New Content',
           color: AppColors.primaryColor,
           borderRadius: BorderRadius.circular(100.r),
-          onTap: () {},
+          onTap: () => Get.to(() => const ClubUploadContentView()),
         ),
         SizedBox(height: 24.h),
 
@@ -194,15 +196,8 @@ class ClubContentTab extends StatelessWidget {
         SizedBox(height: 12.h),
 
         // Post Image
-        ClipRRect(
-          borderRadius: BorderRadius.circular(18.r),
-          child: Image.asset(
-            post.image,
-            width: double.infinity,
-            height: 260.h,
-            fit: BoxFit.cover,
-          ),
-        ),
+        // Post Image(s)
+        _buildPostImages(post),
         SizedBox(height: 12.h),
 
         // Actions Row
@@ -417,4 +412,80 @@ class ClubContentTab extends StatelessWidget {
       ],
     );
   }
+
+  Widget _buildPostImages(FeedPostModel post) {
+    final List<String> images = post.images != null && post.images!.isNotEmpty
+        ? post.images!
+        : [post.image];
+
+    if (images.length == 1) {
+      final imagePath = images.first;
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(18.r),
+        child: imagePath.startsWith('assets/')
+            ? Image.asset(
+                imagePath,
+                width: double.infinity,
+                height: 260.h,
+                fit: BoxFit.cover,
+              )
+            : Image.file(
+                File(imagePath),
+                width: double.infinity,
+                height: 260.h,
+                fit: BoxFit.cover,
+              ),
+      );
+    }
+
+    final activeIndex = 0.obs;
+    return SizedBox(
+      height: 260.h,
+      child: Stack(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(18.r),
+            child: PageView.builder(
+              itemCount: images.length,
+              onPageChanged: (index) => activeIndex.value = index,
+              itemBuilder: (context, index) {
+                final imagePath = images[index];
+                return imagePath.startsWith('assets/')
+                    ? Image.asset(
+                        imagePath,
+                        width: double.infinity,
+                        height: 260.h,
+                        fit: BoxFit.cover,
+                      )
+                    : Image.file(
+                        File(imagePath),
+                        width: double.infinity,
+                        height: 260.h,
+                        fit: BoxFit.cover,
+                      );
+              },
+            ),
+          ),
+          Positioned(
+            top: 12.h,
+            right: 12.w,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+              decoration: BoxDecoration(
+                color: Colors.black.withValues(alpha: 0.6),
+                borderRadius: BorderRadius.circular(10.r),
+              ),
+              child: Obx(() => TextProperty(
+                    text: '${activeIndex.value + 1}/${images.length}',
+                    textColor: AppColors.whiteColor,
+                    fontSize: 11.sp,
+                    fontWeight: FontWeight.w600,
+                  )),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
+

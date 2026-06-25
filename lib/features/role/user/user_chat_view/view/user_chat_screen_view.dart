@@ -113,7 +113,36 @@ class UserChatScreenView extends StatelessWidget {
                   ),
 
                   // Bottom Message Input Bar
-                  _buildBottomInputBar(context, controller),
+                  chat.isClub
+                      ? Container(
+                          padding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 20.w),
+                          margin: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).viewInsets.bottom > 0 ? 12.h : 24.h,
+                            left: 16.w,
+                            right: 16.w,
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppColors.grey50Color,
+                            borderRadius: BorderRadius.circular(16.r),
+                            border: Border.all(color: AppColors.lightGreyColor.withValues(alpha: 0.2)),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.lock_outline, color: AppColors.greyColor, size: 16.w),
+                              SizedBox(width: 8.w),
+                              Expanded(
+                                child: TextProperty(
+                                  text: 'Only clubs can send messages in this chat.',
+                                  textColor: AppColors.greyColor,
+                                  fontSize: 13.sp,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : _buildBottomInputBar(context, controller),
                 ],
               ),
             );

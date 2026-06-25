@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:lively_nightlife_nightclub_party/core/common/widgets/text_property.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/colors.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/icon_path.dart';
+import 'package:lively_nightlife_nightclub_party/routes/app_routes.dart';
 
 class ClubHomeHeader extends StatelessWidget {
   const ClubHomeHeader({super.key});
@@ -59,18 +61,21 @@ class ClubHomeHeader extends StatelessWidget {
               ],
             ),
             SizedBox(width: 16.w),
-            Container(
-              height: 40.h,
-              width: 40.w,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: AppColors.blueColor.withValues(alpha: 0.5),
-                  width: 3.w,
-                ),
-                shape: BoxShape.circle,
-                image: const DecorationImage(
-                  image: NetworkImage('https://i.pravatar.cc/150?img=11'),
-                  fit: BoxFit.cover,
+            GestureDetector(
+              onTap: () => Get.toNamed(AppRoute.clubSettingsView),
+              child: Container(
+                height: 40.h,
+                width: 40.w,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: AppColors.blueColor.withValues(alpha: 0.5),
+                    width: 3.w,
+                  ),
+                  shape: BoxShape.circle,
+                  image: const DecorationImage(
+                    image: NetworkImage('https://i.pravatar.cc/150?img=11'),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),

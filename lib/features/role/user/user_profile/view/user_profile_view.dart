@@ -38,7 +38,7 @@ class UserProfileView extends StatelessWidget {
           children: [
             // Faded Cover Photo Header Widget
             const UserProfileHeaderWidget(),
-            SizedBox(height: 48.h),
+            SizedBox(height: 16.h),
 
             // Profile info and details
             Padding(

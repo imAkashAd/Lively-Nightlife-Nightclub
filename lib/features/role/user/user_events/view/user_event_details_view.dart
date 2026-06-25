@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -25,6 +26,44 @@ class UserEventDetailsView extends StatelessWidget {
     final UserEventModel event = Get.arguments ?? controller.eventsList.first;
     final RxBool isFollowingClub = false.obs;
 
+    final Widget imageWidget;
+    final fallback = Container(
+      width: double.infinity,
+      height: 280.h,
+      color: AppColors.grey50Color,
+      child: const Icon(
+        Icons.broken_image,
+        size: 50,
+        color: AppColors.greyColor,
+      ),
+    );
+
+    if (event.image.startsWith('http')) {
+      imageWidget = Image.network(
+        event.image,
+        width: double.infinity,
+        height: 280.h,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) => fallback,
+      );
+    } else if (event.image.startsWith('assets/')) {
+      imageWidget = Image.asset(
+        event.image,
+        width: double.infinity,
+        height: 280.h,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) => fallback,
+      );
+    } else {
+      imageWidget = Image.file(
+        File(event.image),
+        width: double.infinity,
+        height: 280.h,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) => fallback,
+      );
+    }
+
     return Scaffold(
       backgroundColor: AppColors.lightGreyColor2,
       body: Stack(
@@ -38,22 +77,7 @@ class UserEventDetailsView extends StatelessWidget {
                 // Cover Image with Gradient & Hashtag overlay
                 Stack(
                   children: [
-                    Image.network(
-                      event.image,
-                      width: double.infinity,
-                      height: 280.h,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) => Container(
-                        width: double.infinity,
-                        height: 280.h,
-                        color: AppColors.grey50Color,
-                        child: const Icon(
-                          Icons.broken_image,
-                          size: 50,
-                          color: AppColors.greyColor,
-                        ),
-                      ),
-                    ),
+                    imageWidget,
                     Container(
                       height: 280.h,
                       decoration: const BoxDecoration(

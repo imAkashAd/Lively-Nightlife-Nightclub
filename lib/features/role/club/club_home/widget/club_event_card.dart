@@ -1,11 +1,14 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:lively_nightlife_nightclub_party/core/common/widgets/custom_button.dart';
 import 'package:lively_nightlife_nightclub_party/core/common/widgets/text_property.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/colors.dart';
 import 'package:lively_nightlife_nightclub_party/core/utils/constants/icon_path.dart';
 import 'package:lively_nightlife_nightclub_party/features/role/club/club_home/model/club_event_model.dart';
+import 'package:lively_nightlife_nightclub_party/features/role/club/club_home/view/club_create_event_view.dart';
 
 class ClubEventCard extends StatelessWidget {
   final ClubEventModel event;
@@ -13,6 +16,15 @@ class ClubEventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Widget imageWidget;
+    if (event.imagePath.startsWith('http')) {
+      imageWidget = Image.network(event.imagePath, width: double.infinity, height: 160.h, fit: BoxFit.cover);
+    } else if (event.imagePath.startsWith('assets/')) {
+      imageWidget = Image.asset(event.imagePath, width: double.infinity, height: 160.h, fit: BoxFit.cover);
+    } else {
+      imageWidget = Image.file(File(event.imagePath), width: double.infinity, height: 160.h, fit: BoxFit.cover);
+    }
+
     return Container(
       decoration: BoxDecoration(
         color: AppColors.whiteColor,
@@ -33,7 +45,7 @@ class ClubEventCard extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
-                child: Image.asset(event.imagePath, width: double.infinity, height: 160.h, fit: BoxFit.cover),
+                child: imageWidget,
               ),
               if (event.isOpen)
                 Positioned(
@@ -105,7 +117,9 @@ class ClubEventCard extends StatelessWidget {
                 SizedBox(height: 16.h),
                 Row(
                   children: [
-                    Expanded(child: _buildButton('Edit', AppColors.primaryColor, Colors.white, () {})),
+                    Expanded(child: _buildButton('Edit', AppColors.primaryColor, Colors.white, () {
+                      Get.to(() => const ClubCreateEventView(), arguments: event);
+                    })),
                     SizedBox(width: 12.w),
                     Expanded(child: _buildButton('Analytics', AppColors.grey50Color.withValues(alpha: 0.5), AppColors.secondBlackColor, () {})),
                   ],

@@ -144,6 +144,12 @@ class ClubHomeController extends GetxController {
     post.shareCount.value++;
   }
 
+  void addPost(FeedPostModel post) {
+    contentPosts.insert(0, post);
+    final count = int.tryParse(contentPostsCount.value) ?? 0;
+    contentPostsCount.value = (count + 1).toString();
+  }
+
   void _loadUpcomingEvents() {
     upcomingEvents.assignAll([
       ClubEventModel(

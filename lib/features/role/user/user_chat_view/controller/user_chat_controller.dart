@@ -134,7 +134,7 @@ class UserChatController extends GetxController {
     }
   }
 
-  Future<void> pickFileAttachment() async {
+  Future<void> pickFileAttachment({bool sentByClub = false}) async {
     try {
       final result = await FilePicker.platform.pickFiles();
       if (result != null && result.files.single.path != null) {
@@ -144,6 +144,7 @@ class UserChatController extends GetxController {
           fileName: platformFile.name,
           fileSize:
               '${(platformFile.size / (1024 * 1024)).toStringAsFixed(1)} MB',
+          sentByClub: sentByClub,
         );
       }
     } catch (e) {
@@ -155,12 +156,12 @@ class UserChatController extends GetxController {
     }
   }
 
-  Future<void> pickImageAttachment(bool fromCamera) async {
+  Future<void> pickImageAttachment(bool fromCamera, {bool sentByClub = false}) async {
     try {
       final file = await _picker.pickImage(
         source: fromCamera ? ImageSource.camera : ImageSource.gallery,
       );
-      if (file != null) sendAttachmentMessage(imagePath: file.path);
+      if (file != null) sendAttachmentMessage(imagePath: file.path, sentByClub: sentByClub);
     } catch (e) {
       Get.snackbar(
         'Error',
@@ -170,14 +171,15 @@ class UserChatController extends GetxController {
     }
   }
 
-  void sendMessage(String text) {
+  void sendMessage(String text, {bool sentByClub = false}) {
     if (text.trim().isEmpty || activeChat.value == null) return;
     _addMessageToActiveChat(
       UserMessageModel(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         text: text,
-        isMe: true,
+        isMe: !sentByClub,
         time: DateTime.now(),
+        sentByClub: sentByClub,
       ),
     );
     messageInputController.clear();
@@ -188,18 +190,20 @@ class UserChatController extends GetxController {
     String? filePath,
     String? fileName,
     String? fileSize,
+    bool sentByClub = false,
   }) {
     if (activeChat.value == null) return;
     _addMessageToActiveChat(
       UserMessageModel(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         text: imagePath != null ? 'Sent an image' : (fileName ?? 'Sent a file'),
-        isMe: true,
+        isMe: !sentByClub,
         time: DateTime.now(),
         imagePath: imagePath,
         filePath: filePath,
         fileName: fileName,
         fileSize: fileSize,
+        sentByClub: sentByClub,
       ),
     );
   }
@@ -250,6 +254,25 @@ class UserChatController extends GetxController {
 
   void _loadDemoChats() {
     chatsList.assignAll([
+      UserChatModel(
+        id: 'club_omnia',
+        name: 'Omnia Nightclub',
+        avatar: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7',
+        lastSeen: 'Active now',
+        isOnline: true,
+        time: '10.24 PM',
+        unreadCount: 1,
+        isClub: true,
+        messages: [
+          UserMessageModel(
+            id: 'omnia_1',
+            text: 'Welcome to Omnia! Tonight we have Martin Garrix live. Don\'t miss out!',
+            isMe: false,
+            time: DateTime.now().subtract(const Duration(minutes: 30)),
+            sentByClub: true,
+          ),
+        ],
+      ),
       UserChatModel(
         id: '1',
         name: 'Sophia Carter',

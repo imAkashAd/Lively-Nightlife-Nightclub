@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -232,7 +233,11 @@ class UserEventListView extends GetView<UserEventController> {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(24.r),
                                   image: DecorationImage(
-                                    image: NetworkImage(hotEvent.image),
+                                    image: hotEvent.image.startsWith('http')
+                                        ? NetworkImage(hotEvent.image)
+                                        : (hotEvent.image.startsWith('assets/')
+                                            ? AssetImage(hotEvent.image)
+                                            : FileImage(File(hotEvent.image)) as ImageProvider),
                                     fit: BoxFit.cover,
                                   ),
                                 ),

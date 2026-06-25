@@ -11,12 +11,17 @@ import '../model/user_message_model.dart';
 
 class UserChatMessageBubble extends StatelessWidget {
   final UserMessageModel message;
+  final bool isClubView;
 
-  const UserChatMessageBubble({super.key, required this.message});
+  const UserChatMessageBubble({
+    super.key,
+    required this.message,
+    this.isClubView = false,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final isMe = message.isMe;
+    final isMe = isClubView ? message.sentByClub : message.isMe;
 
     if (message.sharedClubOrEvent != null) {
       return Padding(
@@ -68,7 +73,7 @@ class UserChatMessageBubble extends StatelessWidget {
                   constraints: BoxConstraints(maxWidth: 0.75.sw),
                   padding: _getPadding(),
                   decoration: BoxDecoration(
-                    color: isMe ? AppColors.grey100Color : AppColors.blueColor,
+                    color: isMe ? AppColors.blueColor : AppColors.grey100Color,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(16.r),
                       topRight: Radius.circular(16.r),
@@ -80,7 +85,7 @@ class UserChatMessageBubble extends StatelessWidget {
                           : Radius.circular(16.r),
                     ),
                   ),
-                  child: _buildBubbleContent(),
+                  child: _buildBubbleContent(isMe),
                 ),
               ),
             ],
@@ -110,9 +115,7 @@ class UserChatMessageBubble extends StatelessWidget {
     return EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h);
   }
 
-  Widget _buildBubbleContent() {
-    final isMe = message.isMe;
-
+  Widget _buildBubbleContent(bool isMe) {
     // 1. Image Attachment
     if (message.imagePath != null) {
       return ClipRRect(
@@ -168,7 +171,7 @@ class UserChatMessageBubble extends StatelessWidget {
             children: [
               TextProperty(
                 text: 'Document File',
-                textColor: isMe ? AppColors.blackColor : AppColors.whiteColor,
+                textColor: isMe ? AppColors.whiteColor : AppColors.blackColor,
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w500,
               ),
@@ -176,8 +179,8 @@ class UserChatMessageBubble extends StatelessWidget {
               TextProperty(
                 text: message.fileSize ?? '0 B',
                 textColor: isMe
-                    ? AppColors.greyColor
-                    : AppColors.whiteColor.withValues(alpha: 0.8),
+                    ? AppColors.whiteColor.withValues(alpha: 0.8)
+                    : AppColors.greyColor,
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w400,
               ),
@@ -190,7 +193,7 @@ class UserChatMessageBubble extends StatelessWidget {
     // 3. Simple Text Message
     return TextProperty(
       text: message.text,
-      textColor: isMe ? AppColors.blackColor : AppColors.whiteColor,
+      textColor: isMe ? AppColors.whiteColor : AppColors.blackColor,
       fontSize: 14.sp,
       fontWeight: FontWeight.w400,
     );

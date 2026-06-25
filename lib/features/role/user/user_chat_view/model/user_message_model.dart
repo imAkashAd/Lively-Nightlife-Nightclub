@@ -10,6 +10,7 @@ class UserMessageModel {
   final String? fileName;
   final String? fileSize;
   final UserDiscoverClubModel? sharedClubOrEvent;
+  final bool sentByClub;
 
   const UserMessageModel({
     required this.id,
@@ -21,5 +22,6 @@ class UserMessageModel {
     this.fileName,
     this.fileSize,
     this.sharedClubOrEvent,
+    this.sentByClub = false,
   });
 }
