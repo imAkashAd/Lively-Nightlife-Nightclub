@@ -42,7 +42,12 @@ class CreateEventStepOne extends GetView<ClubCreateEventController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TextProperty(text: 'Date *', textColor: AppColors.blackColor, fontSize: 13.sp, fontWeight: FontWeight.w600),
+                    TextProperty(
+                      text: 'Date *',
+                      textColor: AppColors.blackColor,
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
                     SizedBox(height: 6.h),
                     GestureDetector(
                       onTap: () {
@@ -69,10 +74,18 @@ class CreateEventStepOne extends GetView<ClubCreateEventController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TextProperty(text: 'Start Time *', textColor: AppColors.blackColor, fontSize: 13.sp, fontWeight: FontWeight.w600),
+                    TextProperty(
+                      text: 'Start Time *',
+                      textColor: AppColors.blackColor,
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
                     SizedBox(height: 6.h),
                     GestureDetector(
-                      onTap: () => controller.selectTime(context, controller.startTimeController),
+                      onTap: () => controller.selectTime(
+                        context,
+                        controller.startTimeController,
+                      ),
                       child: AbsorbPointer(
                         child: CustomTextfield(
                           controller: controller.startTimeController,
@@ -94,10 +107,18 @@ class CreateEventStepOne extends GetView<ClubCreateEventController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TextProperty(text: 'End Time', textColor: AppColors.blackColor, fontSize: 13.sp, fontWeight: FontWeight.w600),
+                    TextProperty(
+                      text: 'End Time',
+                      textColor: AppColors.blackColor,
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
                     SizedBox(height: 6.h),
                     GestureDetector(
-                      onTap: () => controller.selectTime(context, controller.endTimeController),
+                      onTap: () => controller.selectTime(
+                        context,
+                        controller.endTimeController,
+                      ),
                       child: AbsorbPointer(
                         child: CustomTextfield(
                           controller: controller.endTimeController,
@@ -115,7 +136,12 @@ class CreateEventStepOne extends GetView<ClubCreateEventController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TextProperty(text: 'Capacity', textColor: AppColors.blackColor, fontSize: 13.sp, fontWeight: FontWeight.w600),
+                    TextProperty(
+                      text: 'Capacity',
+                      textColor: AppColors.blackColor,
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
                     SizedBox(height: 6.h),
                     CustomTextfield(
                       controller: controller.capacityController,
@@ -140,7 +166,8 @@ class CreateEventStepOne extends GetView<ClubCreateEventController> {
           SizedBox(height: 6.h),
           CustomTextfield(
             controller: controller.descriptionController,
-            fieldText: 'Describe the event — vibe, what to expect, special features...',
+            fieldText:
+                'Describe the event — vibe, what to expect, special features...',
             hintTextColor: AppColors.lightGreyColor,
             maxLines: 5,
             fillColor: AppColors.lightGreyColor2,

@@ -56,4 +56,12 @@ class IconPath {
   static const String lock = 'assets/icons/lock.svg';
   static const String purplePerson = 'assets/icons/purplePerson.svg';
   static const String tickIcon = 'assets/icons/tickIcon.svg';
+  static const String accountIcon = 'assets/icons/accountIcon.svg';
+  static const String billingIcon = 'assets/icons/billingIcon.svg';
+  static const String helpAndSupIcon = 'assets/icons/helpAndSupICon.svg';
+  static const String logoutIcon = 'assets/icons/logoutIcon.svg';
+  static const String sheildIcon = 'assets/icons/sheildIcon.svg';
+  static const String switchRoleIcon = 'assets/icons/switchRoleIcon.svg';
+  static const String deleteIcon = 'assets/icons/deleteIcon.svg';
+  static const String penIcon = 'assets/icons/penIcon.svg';
 }

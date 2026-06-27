@@ -34,14 +34,15 @@ class UserChatController extends GetxController {
   }
 
   void filterChats() {
+    final clubChats = chatsList.where((c) => c.isClub).toList();
     if (selectedTab.value == 0) {
-      filteredChats.assignAll(chatsList);
+      filteredChats.assignAll(clubChats);
     } else if (selectedTab.value == 1) {
-      filteredChats.assignAll(chatsList.where((c) => c.isOnline).toList());
+      filteredChats.assignAll(clubChats.where((c) => c.isOnline).toList());
     } else if (selectedTab.value == 2) {
-      filteredChats.assignAll(chatsList.take(3).toList());
+      filteredChats.assignAll(clubChats.take(3).toList());
     } else {
-      filteredChats.assignAll(chatsList.skip(2).toList());
+      filteredChats.assignAll(clubChats.skip(2).toList());
     }
   }
 
@@ -51,10 +52,65 @@ class UserChatController extends GetxController {
     final idx = chatsList.indexWhere((c) => c.id == chat.id);
     if (idx != -1) {
       final updated = chatsList[idx].copyWith(unreadCount: 0);
-      chatsList[idx] = updated;
-      activeChat.value = updated;
-      filterChats();
+      _updateAndSyncChat(updated);
     }
+  }
+
+  void _updateAndSyncChat(UserChatModel updatedChat) {
+    // Update in chatsList
+    final idx = chatsList.indexWhere((c) => c.id == updatedChat.id);
+    if (idx != -1) {
+      chatsList[idx] = updatedChat;
+    } else {
+      chatsList.add(updatedChat);
+    }
+
+    // Update activeChat if it's the one currently being viewed
+    if (activeChat.value?.id == updatedChat.id) {
+      activeChat.value = updatedChat;
+    }
+
+    // Sync connection: club_omnia <-> user_alex
+    if (updatedChat.id == 'club_omnia') {
+      final alexIdx = chatsList.indexWhere((c) => c.id == 'user_alex');
+      if (alexIdx != -1) {
+        final alexChat = chatsList[alexIdx];
+        // Only sync if the last message is different to prevent infinite loops
+        if (alexChat.messages.isEmpty || 
+            updatedChat.messages.isEmpty || 
+            alexChat.messages.last.id != updatedChat.messages.last.id) {
+          final newMessages = List<UserMessageModel>.from(updatedChat.messages);
+          final updatedAlex = alexChat.copyWith(
+            messages: newMessages,
+            time: updatedChat.time,
+          );
+          chatsList[alexIdx] = updatedAlex;
+          if (activeChat.value?.id == 'user_alex') {
+            activeChat.value = updatedAlex;
+          }
+        }
+      }
+    } else if (updatedChat.id == 'user_alex') {
+      final omniaIdx = chatsList.indexWhere((c) => c.id == 'club_omnia');
+      if (omniaIdx != -1) {
+        final omniaChat = chatsList[omniaIdx];
+        if (omniaChat.messages.isEmpty || 
+            updatedChat.messages.isEmpty || 
+            omniaChat.messages.last.id != updatedChat.messages.last.id) {
+          final newMessages = List<UserMessageModel>.from(updatedChat.messages);
+          final updatedOmnia = omniaChat.copyWith(
+            messages: newMessages,
+            time: updatedChat.time,
+          );
+          chatsList[omniaIdx] = updatedOmnia;
+          if (activeChat.value?.id == 'club_omnia') {
+            activeChat.value = updatedOmnia;
+          }
+        }
+      }
+    }
+
+    filterChats();
   }
 
   void shareClubOrEvent(String userName, UserDiscoverClubModel item) {
@@ -75,7 +131,6 @@ class UserChatController extends GetxController {
         unreadCount: 0,
         messages: [],
       );
-      chatsList.add(chat);
     }
 
     final newMessage = UserMessageModel(
@@ -93,14 +148,7 @@ class UserChatController extends GetxController {
       time: 'Just now',
     );
 
-    final targetIdx = chatsList.indexWhere((c) => c.name == chat.name);
-    if (targetIdx != -1) {
-      chatsList[targetIdx] = updatedChat;
-      if (activeChat.value?.id == updatedChat.id) {
-        activeChat.value = updatedChat;
-      }
-    }
-    filterChats();
+    _updateAndSyncChat(updatedChat);
   }
 
   Future<void> createStory(bool fromCamera, {bool isVideo = false}) async {
@@ -215,12 +263,7 @@ class UserChatController extends GetxController {
       messages: List<UserMessageModel>.from(chat.messages)..add(msg),
       time: 'Just now',
     );
-    activeChat.value = updatedChat;
-    final idx = chatsList.indexWhere((c) => c.id == chat.id);
-    if (idx != -1) {
-      chatsList[idx] = updatedChat;
-      filterChats();
-    }
+    _updateAndSyncChat(updatedChat);
   }
 
   void _loadDemoStories() {
@@ -260,9 +303,104 @@ class UserChatController extends GetxController {
         avatar: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7',
         lastSeen: 'Active now',
         isOnline: true,
-        time: '10.24 PM',
+        time: '10:24 PM',
         unreadCount: 1,
         isClub: true,
+        messages: [
+          UserMessageModel(
+            id: 'omnia_1',
+            text: 'Welcome to Omnia! Tonight we have Martin Garrix live. Don\'t miss out!',
+            isMe: false,
+            time: DateTime.now().subtract(const Duration(minutes: 30)),
+            sentByClub: true,
+          ),
+        ],
+      ),
+      UserChatModel(
+        id: 'club_marquee',
+        name: 'Marquee Nightclub',
+        avatar: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819',
+        lastSeen: 'Active now',
+        isOnline: true,
+        time: '09:15 PM',
+        unreadCount: 0,
+        isClub: true,
+        messages: [
+          UserMessageModel(
+            id: 'marquee_1',
+            text: 'Hey! Ready for the weekend party at Marquee?',
+            isMe: false,
+            time: DateTime.now().subtract(const Duration(hours: 2)),
+            sentByClub: true,
+          ),
+        ],
+      ),
+      UserChatModel(
+        id: 'club_hakkasan',
+        name: 'Hakkasan Nightclub',
+        avatar: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745',
+        lastSeen: 'Active 1h ago',
+        isOnline: false,
+        time: 'Yesterday',
+        unreadCount: 0,
+        isClub: true,
+        messages: [
+          UserMessageModel(
+            id: 'hakkasan_1',
+            text: 'Your reservation for VIP Table 4 has been confirmed.',
+            isMe: false,
+            time: DateTime.now().subtract(const Duration(days: 1)),
+            sentByClub: true,
+          ),
+        ],
+      ),
+      UserChatModel(
+        id: 'club_xs',
+        name: 'XS Nightclub',
+        avatar: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3',
+        lastSeen: 'Active now',
+        isOnline: true,
+        time: 'Wednesday',
+        unreadCount: 0,
+        isClub: true,
+        messages: [
+          UserMessageModel(
+            id: 'xs_1',
+            text: 'Tickets for the Diplo event are selling out fast!',
+            isMe: false,
+            time: DateTime.now().subtract(const Duration(days: 3)),
+            sentByClub: true,
+          ),
+        ],
+      ),
+      UserChatModel(
+        id: 'club_zouk',
+        name: 'Zouk Nightclub',
+        avatar: 'https://images.unsplash.com/photo-1506157786151-b8491531f063',
+        lastSeen: 'Active 2h ago',
+        isOnline: false,
+        time: 'Monday',
+        unreadCount: 0,
+        isClub: true,
+        messages: [
+          UserMessageModel(
+            id: 'zouk_1',
+            text: 'Thanks for visiting Zouk! Let us know how your experience was.',
+            isMe: false,
+            time: DateTime.now().subtract(const Duration(days: 5)),
+            sentByClub: true,
+          ),
+        ],
+      ),
+      UserChatModel(
+        id: 'user_alex',
+        name: 'Alex Rivera',
+        avatar: 'https://i.pravatar.cc/150?img=10',
+        lastSeen: 'Active now',
+        isOnline: true,
+        time: '10:24 PM',
+        unreadCount: 1,
+        isClub: false,
         messages: [
           UserMessageModel(
             id: 'omnia_1',
@@ -279,7 +417,7 @@ class UserChatController extends GetxController {
         avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330',
         lastSeen: '2 hours ago',
         isOnline: true,
-        time: '10.24 PM',
+        time: '10:24 PM',
         unreadCount: 2,
         messages: [
           UserMessageModel(
@@ -308,7 +446,7 @@ class UserChatController extends GetxController {
         avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d',
         lastSeen: '3 hours ago',
         isOnline: false,
-        time: '10.24 PM',
+        time: '10:24 PM',
         unreadCount: 0,
         messages: [
           UserMessageModel(
@@ -325,7 +463,7 @@ class UserChatController extends GetxController {
         avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e',
         lastSeen: '1 day ago',
         isOnline: false,
-        time: '10.24 PM',
+        time: '10:24 PM',
         unreadCount: 0,
         messages: [
           UserMessageModel(
@@ -342,7 +480,7 @@ class UserChatController extends GetxController {
         avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9',
         lastSeen: 'Active now',
         isOnline: true,
-        time: '10.24 PM',
+        time: '10:24 PM',
         unreadCount: 1,
         messages: [
           UserMessageModel(
